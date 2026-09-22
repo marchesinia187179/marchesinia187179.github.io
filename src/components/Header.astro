@@ -1,0 +1,41 @@
+<header>
+    <nav>
+        <a href="/">Home</a>
+
+        <div>
+            <a href="/blog">Blog</a>
+            <a href="/projects">Progetti</a>
+            <a href="/about">Chi sono</a>
+        </div>
+    </nav>
+</header>
+
+<style>
+    header {
+        border-bottom: 1px solid #ddd;
+    }
+
+    nav {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 1rem;
+
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    nav div {
+        display: flex;
+        gap: 1.5rem;
+    }
+
+    a {
+        color: inherit;
+        text-decoration: none;
+    }
+
+    a:hover {
+        text-decoration: underline;
+    }
+</style>

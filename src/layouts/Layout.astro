@@ -1,0 +1,61 @@
+---
+import Header from "../components/Header.astro";
+
+interface Props {
+    title?: string;
+    description?: string;
+}
+
+const {
+    title = "Portfolio",
+    description = "Portfolio personale"
+} = Astro.props;
+---
+
+<!doctype html>
+
+<html lang="it">
+    <head>
+        <meta charset="UTF-8" />
+
+        <meta
+            name="viewport"
+            content="width=device-width"
+        />
+
+        <meta
+            name="description"
+            content={description}
+        />
+
+        <title>{title}</title>
+    </head>
+
+    <body>
+        <Header />
+
+        <main>
+            <slot />
+        </main>
+    </body>
+</html>
+
+<style is:global>
+    * {
+        box-sizing: border-box;
+    }
+
+    html {
+        font-family: system-ui, sans-serif;
+    }
+
+    body {
+        margin: 0;
+    }
+
+    main {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 2rem 1rem;
+    }
+</style>
