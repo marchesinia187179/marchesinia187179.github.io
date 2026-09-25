@@ -1,14 +1,344 @@
 ---
 import Layout from "../layouts/Layout.astro";
+import ProjectCard from "../components/ProjectCard.astro";
+import ArticleCard from "../components/ArticleCard.astro";
+
+import { getCollection } from "astro:content";
+
+const projects = (
+    await getCollection(
+        "projects",
+        ({ data }) => !data.draft
+    )
+)
+    .sort(
+        (a, b) =>
+            b.data.date.valueOf() - a.data.date.valueOf()
+    )
+    .slice(0, 3);
+
+const posts = (
+    await getCollection(
+        "blog",
+        ({ data }) => !data.draft
+    )
+)
+    .sort(
+        (a, b) =>
+            b.data.date.valueOf() - a.data.date.valueOf()
+    )
+    .slice(0, 3);
 ---
 
 <Layout
     title="Home | Portfolio"
     description="Portfolio personale e blog"
 >
-    <h1>Il mio Portfolio</h1>
+    <section class="hero">
+        <p class="hero-label">
+            Ingegneria Informatica
+        </p>
 
-    <p>
-        Benvenuto nel mio sito personale.
-    </p>
+        <h1>
+            Ciao, sono Alessandro.
+        </h1>
+
+        <p class="hero-description">
+            Questo è il mio portfolio personale, dove raccolgo
+            progetti, esperienze e approfondimenti nel campo
+            dell'informatica.
+        </p>
+
+        <div class="hero-actions">
+            <a class="button primary" href="/projects">
+                Esplora i progetti
+            </a>
+
+            <a
+                class="button secondary"
+                href="https://github.com/marchesinia187179"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub
+            </a>
+        </div>
+    </section>
+
+
+    <section class="section">
+        <div class="section-heading">
+            <div>
+                <p class="section-label">
+                    Interessi
+                </p>
+
+                <h2>
+                    Aree principali
+                </h2>
+            </div>
+        </div>
+
+        <div class="interests">
+            <article>
+                <h3>Cybersecurity</h3>
+
+                <p>
+                    Sicurezza dei sistemi e delle infrastrutture
+                    informatiche.
+                </p>
+            </article>
+
+            <article>
+                <h3>Machine Learning</h3>
+
+                <p>
+                    Applicazione di tecniche di apprendimento
+                    automatico a problemi reali.
+                </p>
+            </article>
+
+            <article>
+                <h3>Systems & Embedded</h3>
+
+                <p>
+                    Sistemi informatici, elaborazione efficiente
+                    e dispositivi embedded.
+                </p>
+            </article>
+        </div>
+    </section>
+
+
+    {
+        projects.length > 0 && (
+            <section class="section">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">
+                            Portfolio
+                        </p>
+
+                        <h2>
+                            Progetti recenti
+                        </h2>
+                    </div>
+
+                    <a href="/projects">
+                        Tutti i progetti →
+                    </a>
+                </div>
+
+                <div class="projects">
+                    {
+                        projects.map((project) => (
+                            <ProjectCard project={project} />
+                        ))
+                    }
+                </div>
+            </section>
+        )
+    }
+
+
+    {
+        posts.length > 0 && (
+            <section class="section">
+                <div class="section-heading">
+                    <div>
+                        <p class="section-label">
+                            Blog
+                        </p>
+
+                        <h2>
+                            Ultimi articoli
+                        </h2>
+                    </div>
+
+                    <a href="/blog">
+                        Tutti gli articoli →
+                    </a>
+                </div>
+
+                <div class="posts">
+                    {
+                        posts.map((post) => (
+                            <ArticleCard post={post} />
+                        ))
+                    }
+                </div>
+            </section>
+        )
+    }
 </Layout>
+
+<style>
+    .hero {
+        max-width: 850px;
+
+        padding:
+            clamp(3rem, 8vw, 7rem)
+            0
+            clamp(4rem, 8vw, 7rem);
+    }
+
+    .hero-label,
+    .section-label {
+        margin-bottom: 0.75rem;
+
+        color: var(--color-primary);
+
+        font-size: 0.85rem;
+        font-weight: 700;
+
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .hero h1 {
+        margin-bottom: 1.5rem;
+    }
+
+    .hero-description {
+        max-width: 700px;
+
+        margin-bottom: 2rem;
+
+        color: var(--color-text-secondary);
+
+        font-size: clamp(1.1rem, 2vw, 1.3rem);
+    }
+
+    .hero-actions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        min-height: 44px;
+        padding: 0.65rem 1.1rem;
+
+        border: 1px solid transparent;
+        border-radius: 8px;
+
+        font-weight: 600;
+
+        text-decoration: none;
+
+        transition:
+            background var(--transition),
+            border-color var(--transition),
+            color var(--transition);
+    }
+
+    .button.primary {
+        color: #ffffff;
+        background: var(--color-primary);
+    }
+
+    .button.primary:hover {
+        color: #ffffff;
+        background: var(--color-primary-hover);
+    }
+
+    .button.secondary {
+        color: var(--color-text);
+        background: transparent;
+
+        border-color: var(--color-border);
+    }
+
+    .button.secondary:hover {
+        color: var(--color-text);
+        background: var(--color-surface);
+    }
+
+
+    .section {
+        padding: 4rem 0;
+
+        border-top: 1px solid var(--color-border);
+    }
+
+    .section-heading {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+
+        gap: 1rem;
+
+        margin-bottom: 2rem;
+    }
+
+    .section-heading h2 {
+        margin-bottom: 0;
+    }
+
+    .section-heading > a {
+        flex-shrink: 0;
+
+        font-weight: 500;
+    }
+
+
+    .interests {
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(220px, 1fr));
+
+        gap: 1rem;
+    }
+
+    .interests article {
+        padding: 1.5rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .interests h3 {
+        margin-bottom: 0.75rem;
+    }
+
+    .interests p {
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+    }
+
+
+    .projects {
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(280px, 1fr));
+
+        gap: 1.5rem;
+    }
+
+
+    .posts {
+        display: grid;
+        gap: 1rem;
+    }
+
+
+    @media (max-width: 600px) {
+        .section {
+            padding: 3rem 0;
+        }
+
+        .section-heading {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+    }
+</style>

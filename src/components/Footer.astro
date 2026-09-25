@@ -1,0 +1,120 @@
+---
+const currentYear = new Date().getFullYear();
+---
+
+<footer class="site-footer">
+    <div class="footer-content">
+        <div>
+            <p class="footer-name">
+                Alessandro Marchesini
+            </p>
+
+            <p class="footer-description">
+                Portfolio personale e blog.
+            </p>
+        </div>
+
+        <div class="footer-links">
+            <a
+                href="https://github.com/marchesinia187179"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub
+            </a>
+
+            <a href="/blog">
+                Blog
+            </a>
+
+            <a href="/projects">
+                Progetti
+            </a>
+        </div>
+    </div>
+
+    <div class="footer-bottom">
+        <p>
+            © {currentYear} Alessandro Marchesini
+        </p>
+    </div>
+</footer>
+
+<style>
+    .site-footer {
+        margin-top: 4rem;
+
+        border-top: 1px solid var(--color-border);
+    }
+
+    .footer-content,
+    .footer-bottom {
+        width: min(
+            calc(100% - 2rem),
+            var(--content-width)
+        );
+
+        margin: 0 auto;
+    }
+
+    .footer-content {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+
+        gap: 2rem;
+
+        padding: 3rem 0;
+    }
+
+    .footer-name {
+        margin-bottom: 0.25rem;
+
+        color: var(--color-text);
+
+        font-weight: 700;
+    }
+
+    .footer-description {
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+    }
+
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 1.5rem;
+    }
+
+    .footer-links a {
+        color: var(--color-text-secondary);
+
+        font-size: 0.9rem;
+    }
+
+    .footer-links a:hover {
+        color: var(--color-text);
+    }
+
+    .footer-bottom {
+        padding: 1.25rem 0;
+
+        border-top: 1px solid var(--color-border);
+    }
+
+    .footer-bottom p {
+        margin: 0;
+
+        color: var(--color-text-secondary);
+
+        font-size: 0.85rem;
+    }
+
+    @media (max-width: 600px) {
+        .footer-content {
+            flex-direction: column;
+        }
+    }
+</style>

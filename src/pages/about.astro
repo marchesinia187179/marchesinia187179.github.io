@@ -1,0 +1,175 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+    title="Chi sono | Alessandro Marchesini"
+    description="Informazioni su Alessandro Marchesini e sui suoi interessi in ambito informatico."
+>
+    <section class="about-header">
+        <p class="eyebrow">
+            Chi sono
+        </p>
+
+        <h1>
+            Alessandro Marchesini
+        </h1>
+
+        <p class="introduction">
+            Studente di Ingegneria Informatica interessato alla
+            progettazione di sistemi informatici, alla cybersecurity
+            e alle applicazioni del machine learning.
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h2>Profilo</h2>
+
+        <p>
+            Utilizzo questo spazio per raccogliere i progetti,
+            gli approfondimenti e le esperienze sviluppate durante
+            il mio percorso accademico e personale.
+        </p>
+
+        <p>
+            Il mio interesse è rivolto in particolare alla
+            progettazione e integrazione di tecnologie differenti,
+            dalla sicurezza informatica al machine learning,
+            fino ai sistemi embedded e all'elaborazione efficiente.
+        </p>
+    </section>
+
+    <section class="about-section">
+        <h2>Aree di interesse</h2>
+
+        <div class="areas">
+            <article>
+                <h3>Cybersecurity</h3>
+
+                <p>
+                    Sicurezza dei sistemi, delle reti e delle
+                    infrastrutture informatiche.
+                </p>
+            </article>
+
+            <article>
+                <h3>Machine Learning</h3>
+
+                <p>
+                    Applicazione di tecniche di apprendimento
+                    automatico a problemi ingegneristici.
+                </p>
+            </article>
+
+            <article>
+                <h3>Systems</h3>
+
+                <p>
+                    Architetture, sistemi concorrenti,
+                    elaborazione accelerata e real-time.
+                </p>
+            </article>
+
+            <article>
+                <h3>Embedded</h3>
+
+                <p>
+                    Progettazione di sistemi intelligenti
+                    integrando hardware e software.
+                </p>
+            </article>
+        </div>
+    </section>
+
+    <section class="about-section">
+        <h2>Contatti</h2>
+
+        <p>
+            Puoi trovare i miei progetti e il mio codice su
+            <a
+                href="https://github.com/marchesinia187179"
+                target="_blank"
+                rel="noopener noreferrer"
+            >
+                GitHub
+            </a>.
+        </p>
+    </section>
+</Layout>
+
+<style>
+    .about-header {
+        max-width: 800px;
+
+        padding:
+            clamp(2rem, 6vw, 5rem)
+            0
+            4rem;
+    }
+
+    .eyebrow {
+        margin-bottom: 0.75rem;
+
+        color: var(--color-primary);
+
+        font-size: 0.85rem;
+        font-weight: 700;
+
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .about-header h1 {
+        margin-bottom: 1.5rem;
+    }
+
+    .introduction {
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+
+        font-size: clamp(1.1rem, 2vw, 1.3rem);
+    }
+
+    .about-section {
+        max-width: 850px;
+
+        padding: 3rem 0;
+
+        border-top: 1px solid var(--color-border);
+    }
+
+    .about-section > p {
+        color: var(--color-text-secondary);
+    }
+
+    .areas {
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(220px, 1fr));
+
+        gap: 1rem;
+
+        margin-top: 2rem;
+    }
+
+    .areas article {
+        padding: 1.5rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .areas h3 {
+        margin-bottom: 0.75rem;
+    }
+
+    .areas p {
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+    }
+</style>
