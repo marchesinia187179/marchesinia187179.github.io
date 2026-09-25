@@ -1,0 +1,96 @@
+---
+import type { CollectionEntry } from "astro:content";
+
+interface Props {
+    project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+---
+
+<article class="card">
+    <h2>
+        <a href={`/projects/${project.id}`}>
+            {project.data.title}
+        </a>
+    </h2>
+
+    <time datetime={project.data.date.toISOString()}>
+        {project.data.date.toLocaleDateString("it-IT")}
+    </time>
+
+    <p>
+        {project.data.description}
+    </p>
+
+    <div class="tags">
+        {
+            project.data.tags.map((tag) => (
+                <span>{tag}</span>
+            ))
+        }
+    </div>
+</article>
+
+<style>
+    .card {
+        padding: 1.5rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+
+        transition:
+            transform var(--transition),
+            border-color var(--transition);
+    }
+
+    .card:hover {
+        transform: translateY(-3px);
+        border-color: #c4c4c8;
+    }
+
+    h2 {
+        margin-bottom: 0.5rem;
+    }
+
+    h2 a {
+        color: var(--color-text);
+        text-decoration: none;
+    }
+
+    h2 a:hover {
+        color: var(--color-primary);
+    }
+
+    time {
+        color: var(--color-text-secondary);
+        font-size: 0.85rem;
+    }
+
+    p {
+        margin-top: 1rem;
+        color: var(--color-text-secondary);
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 0.5rem;
+
+        margin-top: 1rem;
+    }
+
+    .tags span {
+        padding: 0.25rem 0.65rem;
+
+        background: var(--color-background);
+
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+
+        font-size: 0.8rem;
+    }
+</style>

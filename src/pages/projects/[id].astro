@@ -1,0 +1,117 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import {
+    getCollection,
+    render,
+    type CollectionEntry
+} from "astro:content";
+
+export async function getStaticPaths() {
+    const projects = await getCollection(
+        "projects",
+        ({ data }) => !data.draft
+    );
+
+    return projects.map((project) => ({
+        params: {
+            id: project.id,
+        },
+
+        props: {
+            project,
+        },
+    }));
+}
+
+interface Props {
+    project: CollectionEntry<"projects">;
+}
+
+const { project } = Astro.props;
+
+const { Content } = await render(project);
+---
+
+<Layout
+    title={`${project.data.title} | Portfolio`}
+    description={project.data.description}
+>
+    <article>
+        <header>
+            <h1>{project.data.title}</h1>
+
+            <time datetime={project.data.date.toISOString()}>
+                {project.data.date.toLocaleDateString("it-IT")}
+            </time>
+
+            <p>
+                {project.data.description}
+            </p>
+
+            <div class="tags">
+                {
+                    project.data.tags.map((tag) => (
+                        <span>{tag}</span>
+                    ))
+                }
+            </div>
+
+            {
+                project.data.github && (
+                    <p>
+                        <a
+                            href={project.data.github}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            Repository GitHub
+                        </a>
+                    </p>
+                )
+            }
+        </header>
+
+        <hr />
+
+        <Content />
+    </article>
+</Layout>
+
+<style>
+    article {
+        max-width: 750px;
+        margin: 0 auto;
+    }
+
+    article > header {
+        margin-bottom: 2rem;
+    }
+
+    h1 {
+        margin-bottom: 0.5rem;
+    }
+
+    time {
+        color: #666;
+    }
+
+    .tags {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+        margin-top: 1rem;
+    }
+
+    .tags span {
+        padding: 0.25rem 0.6rem;
+        background: #eee;
+        border-radius: 0.4rem;
+        font-size: 0.85rem;
+    }
+
+    hr {
+        margin: 2rem 0;
+        border: none;
+        border-top: 1px solid #ddd;
+    }
+</style>

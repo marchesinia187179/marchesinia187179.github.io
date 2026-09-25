@@ -1,0 +1,47 @@
+---
+import Layout from "../../layouts/Layout.astro";
+import ProjectCard from "../../components/ProjectCard.astro";
+import { getCollection } from "astro:content";
+
+const projects = await getCollection(
+    "projects",
+    ({ data }) => !data.draft
+);
+
+projects.sort(
+    (a, b) =>
+        b.data.date.valueOf() - a.data.date.valueOf()
+);
+---
+
+<Layout
+    title="Progetti | Portfolio"
+    description="I miei progetti personali e universitari"
+>
+    <h1>Progetti</h1>
+
+    <p>
+        Una raccolta dei progetti che ho realizzato.
+    </p>
+
+    <section class="projects">
+        {
+            projects.map((project) => (
+                <ProjectCard project={project} />
+            ))
+        }
+    </section>
+</Layout>
+
+<style>
+    .projects {
+        display: grid;
+
+        grid-template-columns:
+            repeat(auto-fit, minmax(280px, 1fr));
+
+        gap: 1.5rem;
+
+        margin-top: 2.5rem;
+    }
+</style>
