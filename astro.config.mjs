@@ -1,7 +1,10 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 
+import sitemap from "@astrojs/sitemap";
+
 // https://astro.build/config
 export default defineConfig({
-	site: "https://marchesinia187179.github.io",
+  site: "https://marchesinia187179.github.io",
+  integrations: [sitemap()],
 });
