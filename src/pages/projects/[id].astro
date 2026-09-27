@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import TagList from "../../components/TagList.astro";
+
 import {
     getCollection,
     render,
@@ -15,11 +16,11 @@ export async function getStaticPaths() {
 
     return projects.map((project) => ({
         params: {
-            id: project.id,
+            id: project.id
         },
 
         props: {
-            project,
+            project
         },
     }));
 }
@@ -31,6 +32,12 @@ interface Props {
 const { project } = Astro.props;
 
 const { Content } = await render(project);
+
+const statusLabel = {
+    completed: "Completato",
+    "in-progress": "In corso",
+    planned: "Pianificato",
+}[project.data.status];
 ---
 
 <Layout
@@ -38,29 +45,31 @@ const { Content } = await render(project);
     description={project.data.description}
     image={project.data.image ?? "/favicon.svg"}
 >
-    <article>
-        <header>
-            <h1>{project.data.title}</h1>
+    <article class="project">
+        <header class="project-header">
+            <p class="eyebrow">
+                Progetto
+            </p>
+
+            <h1>
+                {project.data.title}
+            </h1>
 
             <div class="project-meta">
                 {
                     project.data.period && (
-                        <span>{project.data.period}</span>
+                        <span>
+                            {project.data.period}
+                        </span>
                     )
                 }
 
-                <span>
-                    {
-                        project.data.status === "completed"
-                            ? "Completato"
-                            : project.data.status === "in-progress"
-                                ? "In corso"
-                                : "Pianificato"
-                    }
+                <span class="status">
+                    {statusLabel}
                 </span>
             </div>
 
-            <p>
+            <p class="description">
                 {project.data.description}
             </p>
 
@@ -72,6 +81,7 @@ const { Content } = await render(project);
                         {
                             project.data.github && (
                                 <a
+                                    class="button primary"
                                     href={project.data.github}
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -84,6 +94,7 @@ const { Content } = await render(project);
                         {
                             project.data.demo && (
                                 <a
+                                    class="button secondary"
                                     href={project.data.demo}
                                     target="_blank"
                                     rel="noopener noreferrer"
@@ -99,55 +110,104 @@ const { Content } = await render(project);
 
         {
             project.data.image && (
-                <img
-                    class="project-cover"
-                    src={project.data.image}
-                    alt={project.data.imageAlt ?? ""}
-                />
+                <figure class="project-cover">
+                    <img
+                        src={project.data.image}
+                        alt={project.data.imageAlt ?? ""}
+                    />
+                </figure>
             )
         }
 
-        <hr />
-
-        <Content />
+        <div class="project-content">
+            <Content />
+        </div>
     </article>
 </Layout>
 
+
 <style>
-    article {
-        max-width: 750px;
+    .project {
+        max-width: var(--article-width);
         margin: 0 auto;
     }
 
-    article > header {
-        margin-bottom: 2rem;
+    .project-header {
+        margin-bottom: 2.5rem;
+    }
+
+    .eyebrow {
+        margin-bottom: 0.75rem;
+
+        color: var(--color-primary);
+
+        font-size: 0.8rem;
+        font-weight: 700;
+
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
     }
 
     h1 {
-        margin-bottom: 0.5rem;
+        margin-bottom: 1rem;
     }
 
-    time {
-        color: #666;
-    }
-
-    .tags {
+    .project-meta {
         display: flex;
         flex-wrap: wrap;
-        gap: 0.5rem;
-        margin-top: 1rem;
+        align-items: center;
+
+        gap: 0.75rem;
+
+        margin-bottom: 1.5rem;
+
+        color: var(--color-text-secondary);
+
+        font-size: 0.9rem;
     }
 
-    .tags span {
-        padding: 0.25rem 0.65rem;
+    .status {
+        padding: 0.2rem 0.6rem;
 
-        color: var(--color-text);
         background: var(--color-surface);
 
         border: 1px solid var(--color-border);
         border-radius: 999px;
+    }
 
-        font-size: 0.8rem;
+    .description {
+        max-width: 650px;
+
+        margin-bottom: 1.25rem;
+
+        color: var(--color-text-secondary);
+
+        font-size: 1.1rem;
+        line-height: 1.7;
+    }
+
+    .project-links {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 0.75rem;
+
+        margin-top: 1.5rem;
+    }
+
+    .button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+
+        padding: 0.7rem 1rem;
+
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+
+        font-weight: 600;
+
+        text-decoration: none;
 
         transition:
             background var(--transition),
@@ -155,47 +215,101 @@ const { Content } = await render(project);
             color var(--transition);
     }
 
-    hr {
-        margin: 2rem 0;
-        border: none;
-        border-top: 1px solid #ddd;
+    .button.primary {
+        color: var(--color-on-primary);
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+    }
+
+    .button.primary:hover {
+        background: var(--color-primary-hover);
+        border-color: var(--color-primary-hover);
+    }
+
+    .button.secondary {
+        color: var(--color-text);
+        background: var(--color-surface);
+    }
+
+    .button.secondary:hover {
+        border-color: var(--color-primary);
     }
 
     .project-cover {
-        width: 100%;
+        overflow: hidden;
 
-        margin: 2rem 0;
-
-        aspect-ratio: 16 / 9;
-        object-fit: cover;
+        margin: 0 0 3rem;
 
         border: 1px solid var(--color-border);
         border-radius: var(--border-radius);
+
+        background: var(--color-surface);
     }
 
-    .project-meta {
-        display: flex;
-        flex-wrap: wrap;
+    .project-cover img {
+        display: block;
 
-        gap: 0.75rem;
+        width: 100%;
+        height: auto;
+    }
 
+    .project-content {
+        padding-top: 2.5rem;
+
+        border-top: 1px solid var(--color-border);
+    }
+
+    .project-content :global(h2) {
+        margin-top: 3rem;
         margin-bottom: 1rem;
+    }
 
+    .project-content :global(h2:first-child) {
+        margin-top: 0;
+    }
+
+    .project-content :global(h3) {
+        margin-top: 2rem;
+        margin-bottom: 0.75rem;
+    }
+
+    .project-content :global(p),
+    .project-content :global(li) {
         color: var(--color-text-secondary);
-
-        font-size: 0.9rem;
     }
 
-    .project-links {
-        display: flex;
-        flex-wrap: wrap;
-
-        gap: 1rem;
-
-        margin-top: 1.5rem;
+    .project-content :global(p) {
+        line-height: 1.8;
     }
 
-    .project-links a {
-        font-weight: 600;
+    .project-content :global(li) {
+        margin-bottom: 0.35rem;
+    }
+
+    .project-content :global(strong) {
+        color: var(--color-text);
+    }
+
+    .project-content :global(code) {
+        padding: 0.15rem 0.35rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: 4px;
+    }
+
+    @media (max-width: 600px) {
+        .description {
+            font-size: 1rem;
+        }
+
+        .project-cover {
+            margin-bottom: 2rem;
+        }
+
+        .project-content {
+            padding-top: 2rem;
+        }
     }
 </style>

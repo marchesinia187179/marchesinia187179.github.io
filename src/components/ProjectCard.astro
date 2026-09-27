@@ -9,7 +9,11 @@ interface Props {
 const { project } = Astro.props;
 ---
 
-<article class="card">
+<article
+    class="card"
+    data-filter-group="projects"
+    data-tags={project.data.tags.join("|")}
+>
     {
         project.data.image && (
             <a

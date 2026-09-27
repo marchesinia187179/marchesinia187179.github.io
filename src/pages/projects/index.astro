@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
+import FilterBar from "../../components/FilterBar.astro";
 import { getCollection } from "astro:content";
 
 const projects = await getCollection(
@@ -11,6 +12,16 @@ const projects = await getCollection(
 projects.sort(
     (a, b) =>
         b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const tags = [
+    ...new Set(
+        projects.flatMap(
+            (project) => project.data.tags
+        )
+    )
+].sort((a, b) =>
+    a.localeCompare(b, "it")
 );
 ---
 
@@ -28,6 +39,11 @@ projects.sort(
             nell'ambito dell'ingegneria informatica.
         </p>
     </header>
+
+    <FilterBar
+        tags={tags}
+        target="projects"
+    />
 
     <section class="projects">
         {

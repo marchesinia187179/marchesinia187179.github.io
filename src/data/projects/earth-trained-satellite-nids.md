@@ -12,6 +12,8 @@ tags:
   - Satellite Networks
   - Python
 
+github: "https://github.com/marchesinia187179/earth-trained-satellite-ids"
+
 image: "/images/projects/earth-trained-satellite-nids.png"
 imageAlt: "Schema del trasferimento di un Network Intrusion Detection System dal dominio terrestre al dominio satellitare"
 
@@ -19,8 +21,6 @@ status: "completed"
 featured: true
 draft: false
 ---
-
-# Earth-Trained Satellite NIDS
 
 Il progetto studia l'applicabilità di modelli di **Network Intrusion Detection System (NIDS)** addestrati su traffico di rete terrestre a scenari caratterizzati da traffico satellitare.
 

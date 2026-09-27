@@ -1,6 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
+import FilterBar from "../../components/FilterBar.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection(
@@ -11,6 +12,16 @@ const posts = await getCollection(
 posts.sort(
     (a, b) =>
         b.data.date.valueOf() - a.data.date.valueOf()
+);
+
+const tags = [
+    ...new Set(
+        posts.flatMap(
+            (post) => post.data.tags
+        )
+    )
+].sort((a, b) =>
+    a.localeCompare(b, "it")
 );
 ---
 
@@ -23,6 +34,11 @@ posts.sort(
     <p>
         Articoli, appunti e approfondimenti.
     </p>
+
+    <FilterBar
+        tags={tags}
+        target="blog"
+    />
 
     {
         posts.length > 0 ? (

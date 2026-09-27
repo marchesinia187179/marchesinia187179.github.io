@@ -1,0 +1,166 @@
+---
+interface Props {
+    tags: string[];
+    target: string;
+}
+
+const {
+    tags,
+    target
+} = Astro.props;
+---
+
+{
+    tags.length > 0 && (
+        <div
+            class="filter-bar"
+            data-filter-bar
+            data-filter-target={target}
+        >
+            <button
+                class="filter active"
+                type="button"
+                data-filter="all"
+                aria-pressed="true"
+            >
+                Tutti
+            </button>
+
+            {
+                tags.map((tag) => (
+                    <button
+                        class="filter"
+                        type="button"
+                        data-filter={tag}
+                        aria-pressed="false"
+                    >
+                        {tag}
+                    </button>
+                ))
+            }
+        </div>
+    )
+}
+
+
+<style>
+    <p class="filter-label">
+        Filtra per argomento
+    </p>
+
+    .filter-label {
+        margin: 2rem 0 0.75rem;
+
+        color: var(--color-text-secondary);
+
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    .filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 0.5rem;
+
+        margin-top: 0;
+    }
+
+    .filter {
+        padding: 0.45rem 0.8rem;
+
+        color: var(--color-text-secondary);
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 500;
+
+        cursor: pointer;
+
+        transition:
+            color var(--transition),
+            background var(--transition),
+            border-color var(--transition);
+    }
+
+    .filter:hover {
+        color: var(--color-text);
+        border-color: var(--color-primary);
+    }
+
+    .filter.active {
+        color: var(--color-on-primary);
+        background: var(--color-primary);
+        border-color: var(--color-primary);
+    }
+</style>
+
+
+<script>
+    const filterBars =
+        document.querySelectorAll("[data-filter-bar]");
+
+    filterBars.forEach((filterBar) => {
+        const target =
+            filterBar.getAttribute("data-filter-target");
+
+        if (!target) {
+            return;
+        }
+
+        const buttons =
+            filterBar.querySelectorAll("[data-filter]");
+
+        const items =
+            document.querySelectorAll(
+                `[data-filter-group="${target}"]`
+            );
+
+        buttons.forEach((button) => {
+            button.addEventListener("click", () => {
+                const selectedTag =
+                    button.getAttribute("data-filter");
+
+                if (!selectedTag) {
+                    return;
+                }
+
+                buttons.forEach((currentButton) => {
+                    const isActive =
+                        currentButton === button;
+
+                    currentButton.classList.toggle(
+                        "active",
+                        isActive
+                    );
+
+                    currentButton.setAttribute(
+                        "aria-pressed",
+                        String(isActive)
+                    );
+                });
+
+                items.forEach((item) => {
+                    if (!(item instanceof HTMLElement)) {
+                        return;
+                    }
+
+                    const itemTags =
+                        item.dataset.tags
+                            ?.split("|")
+                            .filter(Boolean) ?? [];
+
+                    const shouldShow =
+                        selectedTag === "all" ||
+                        itemTags.includes(selectedTag);
+
+                    item.hidden = !shouldShow;
+                });
+            });
+        });
+    });
+</script>

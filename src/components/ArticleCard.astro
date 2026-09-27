@@ -9,7 +9,11 @@ interface Props {
 const { post } = Astro.props;
 ---
 
-<article class="card">
+<article
+    class="card"
+    data-filter-group="blog"
+    data-tags={post.data.tags.join("|")}
+>
     <h2>
         <a href={`/blog/${post.id}`}>
             {post.data.title}
