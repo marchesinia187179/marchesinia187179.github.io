@@ -6,12 +6,26 @@ import "../styles/global.css";
 interface Props {
     title?: string;
     description?: string;
+    image?: string;
+    type?: "website" | "article";
 }
 
 const {
     title = "Alessandro Marchesini",
-    description = "Portfolio personale di Alessandro Marchesini"
+    description = "Portfolio personale di Alessandro Marchesini",
+    image = "/favicon.svg",
+    type = "website"
 } = Astro.props;
+
+const canonicalURL = new URL(
+    Astro.url.pathname,
+    Astro.site
+);
+
+const socialImageURL = new URL(
+    image,
+    Astro.site
+);
 ---
 
 <!doctype html>
@@ -25,12 +39,85 @@ const {
             content="width=device-width"
         />
 
+        <title>{title}</title>
+
         <meta
             name="description"
             content={description}
         />
 
-        <title>{title}</title>
+        <link
+            rel="canonical"
+            href={canonicalURL}
+        />
+
+        <link
+            rel="icon"
+            type="image/svg+xml"
+            href="/favicon.svg"
+        />
+
+        <link
+            rel="icon"
+            href="/favicon.ico"
+        />
+
+        <!-- Open Graph -->
+        <meta
+            property="og:title"
+            content={title}
+        />
+
+        <meta
+            property="og:description"
+            content={description}
+        />
+
+        <meta
+            property="og:type"
+            content={type}
+        />
+
+        <meta
+            property="og:url"
+            content={canonicalURL}
+        />
+
+        <meta
+            property="og:image"
+            content={socialImageURL}
+        />
+
+        <meta
+            property="og:site_name"
+            content="Alessandro Marchesini"
+        />
+
+        <meta
+            property="og:locale"
+            content="it_IT"
+        />
+
+        <!-- X / Twitter -->
+        <meta
+            name="twitter:card"
+            content="summary_large_image"
+        />
+
+        <meta
+            name="twitter:title"
+            content={title}
+        />
+
+        <meta
+            name="twitter:description"
+            content={description}
+        />
+
+        <meta
+            name="twitter:image"
+            content={socialImageURL}
+        />
     </head>
 
     <body>
@@ -41,7 +128,7 @@ const {
         </main>
 
         <Footer />
-</body>
+    </body>
 </html>
 
 <style>
