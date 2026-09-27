@@ -118,6 +118,25 @@ const socialImageURL = new URL(
             name="twitter:image"
             content={socialImageURL}
         />
+
+        <script is:inline>
+            (() => {
+                const savedTheme = localStorage.getItem("theme");
+
+                const prefersDark = window.matchMedia(
+                    "(prefers-color-scheme: dark)"
+                ).matches;
+
+                const shouldUseDark =
+                    savedTheme === "dark" ||
+                    (!savedTheme && prefersDark);
+
+                document.documentElement.classList.toggle(
+                    "dark",
+                    shouldUseDark
+                );
+            })();
+        </script>
     </head>
 
     <body>

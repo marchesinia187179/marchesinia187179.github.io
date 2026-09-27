@@ -1,5 +1,6 @@
 ---
 import Layout from "../../layouts/Layout.astro";
+import TagList from "../../components/TagList.astro";
 import {
     getCollection,
     render,
@@ -48,13 +49,7 @@ const { Content } = await render(project);
                 {project.data.description}
             </p>
 
-            <div class="tags">
-                {
-                    project.data.tags.map((tag) => (
-                        <span>{tag}</span>
-                    ))
-                }
-            </div>
+            <TagList tags={project.data.tags} />
 
             {
                 project.data.github && (
@@ -103,10 +98,20 @@ const { Content } = await render(project);
     }
 
     .tags span {
-        padding: 0.25rem 0.6rem;
-        background: #eee;
-        border-radius: 0.4rem;
-        font-size: 0.85rem;
+        padding: 0.25rem 0.65rem;
+
+        color: var(--color-text);
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+
+        font-size: 0.8rem;
+
+        transition:
+            background var(--transition),
+            border-color var(--transition),
+            color var(--transition);
     }
 
     hr {

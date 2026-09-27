@@ -13,6 +13,7 @@
 
     --color-primary: #2563eb;
     --color-primary-hover: #1d4ed8;
+    --color-on-primary: #ffffff;
 
     --content-width: 1100px;
     --article-width: 750px;
@@ -20,6 +21,25 @@
     --border-radius: 12px;
 
     --transition: 0.2s ease;
+}
+
+
+/* =========================================================
+   DARK THEME
+   ========================================================= */
+
+html.dark {
+    --color-background: #09090b;
+    --color-surface: #18181b;
+
+    --color-text: #fafafa;
+    --color-text-secondary: #a1a1aa;
+
+    --color-border: #27272a;
+
+    --color-primary: #60a5fa;
+    --color-primary-hover: #93c5fd;
+    --color-on-primary: #09090b;
 }
 
 
@@ -34,7 +54,12 @@
 }
 
 html {
+    color-scheme: light;
     scroll-behavior: smooth;
+}
+
+html.dark {
+    color-scheme: dark;
 }
 
 body {
@@ -54,6 +79,10 @@ body {
     background: var(--color-background);
 
     -webkit-font-smoothing: antialiased;
+
+    transition:
+        background-color var(--transition),
+        color var(--transition);
 }
 
 
@@ -120,5 +149,5 @@ img {
 
 ::selection {
     background: var(--color-primary);
-    color: #ffffff;
+    color: var(--color-on-primary);
 }

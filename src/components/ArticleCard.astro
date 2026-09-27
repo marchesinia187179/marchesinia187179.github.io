@@ -1,5 +1,6 @@
 ---
 import type { CollectionEntry } from "astro:content";
+import TagList from "./TagList.astro";
 
 interface Props {
     post: CollectionEntry<"blog">;
@@ -23,13 +24,7 @@ const { post } = Astro.props;
         {post.data.description}
     </p>
 
-    <div class="tags">
-        {
-            post.data.tags.map((tag) => (
-                <span>{tag}</span>
-            ))
-        }
-    </div>
+    <TagList tags={post.data.tags} />
 </article>
 
 <style>
@@ -48,7 +43,7 @@ const { post } = Astro.props;
 
     .card:hover {
         transform: translateY(-3px);
-        border-color: #c4c4c8;
+        border-color: var(--color-primary);
     }
 
     h2 {
