@@ -42,9 +42,23 @@ const { Content } = await render(project);
         <header>
             <h1>{project.data.title}</h1>
 
-            <time datetime={project.data.date.toISOString()}>
-                {project.data.date.toLocaleDateString("it-IT")}
-            </time>
+            <div class="project-meta">
+                {
+                    project.data.period && (
+                        <span>{project.data.period}</span>
+                    )
+                }
+
+                <span>
+                    {
+                        project.data.status === "completed"
+                            ? "Completato"
+                            : project.data.status === "in-progress"
+                                ? "In corso"
+                                : "Pianificato"
+                    }
+                </span>
+            </div>
 
             <p>
                 {project.data.description}
@@ -53,16 +67,32 @@ const { Content } = await render(project);
             <TagList tags={project.data.tags} />
 
             {
-                project.data.github && (
-                    <p>
-                        <a
-                            href={project.data.github}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                        >
-                            Repository GitHub
-                        </a>
-                    </p>
+                (project.data.github || project.data.demo) && (
+                    <div class="project-links">
+                        {
+                            project.data.github && (
+                                <a
+                                    href={project.data.github}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Repository GitHub
+                                </a>
+                            )
+                        }
+
+                        {
+                            project.data.demo && (
+                                <a
+                                    href={project.data.demo}
+                                    target="_blank"
+                                    rel="noopener noreferrer"
+                                >
+                                    Demo
+                                </a>
+                            )
+                        }
+                    </div>
                 )
             }
         </header>
@@ -141,5 +171,31 @@ const { Content } = await render(project);
 
         border: 1px solid var(--color-border);
         border-radius: var(--border-radius);
+    }
+
+    .project-meta {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 0.75rem;
+
+        margin-bottom: 1rem;
+
+        color: var(--color-text-secondary);
+
+        font-size: 0.9rem;
+    }
+
+    .project-links {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 1rem;
+
+        margin-top: 1.5rem;
+    }
+
+    .project-links a {
+        font-weight: 600;
     }
 </style>

@@ -8,12 +8,15 @@ import { getCollection } from "astro:content";
 const projects = (
     await getCollection(
         "projects",
-        ({ data }) => !data.draft
+        ({ data }) =>
+            !data.draft &&
+            data.featured
     )
 )
     .sort(
         (a, b) =>
-            b.data.date.valueOf() - a.data.date.valueOf()
+            b.data.date.valueOf() -
+            a.data.date.valueOf()
     )
     .slice(0, 3);
 
