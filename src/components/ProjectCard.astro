@@ -7,18 +7,11 @@ interface Props {
 }
 
 const { project } = Astro.props;
-
-const allTags = [
-    ...project.data.tags.areas,
-    ...project.data.tags.technologies,
-    ...project.data.tags.languages,
-];
 ---
 
 <article
     class="card"
     data-filter-group="projects"
-    data-tags={allTags.join("|")}
     data-areas={project.data.tags.areas.join("|")}
     data-technologies={project.data.tags.technologies.join("|")}
     data-languages={project.data.tags.languages.join("|")}
@@ -89,7 +82,6 @@ const allTags = [
         </a>
     </div>
 </article>
-
 
 <style>
     .card {

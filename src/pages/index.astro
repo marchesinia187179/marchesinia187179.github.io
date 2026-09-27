@@ -28,15 +28,20 @@ const posts = (
 )
     .sort(
         (a, b) =>
-            b.data.date.valueOf() - a.data.date.valueOf()
+            b.data.date.valueOf() -
+            a.data.date.valueOf()
     )
     .slice(0, 3);
 ---
 
 <Layout
-    title="Home | Portfolio"
-    description="Portfolio personale e blog"
+    title="Alessandro Marchesini | Ingegneria Informatica"
+    description="Portfolio di Alessandro Marchesini: progetti e approfondimenti su cybersecurity, machine learning, sistemi informatici, embedded e infrastrutture."
 >
+    <!-- =====================================================
+         HERO
+         ===================================================== -->
+
     <section class="hero">
         <p class="hero-label">
             Ingegneria Informatica
@@ -47,14 +52,26 @@ const posts = (
         </h1>
 
         <p class="hero-description">
-            Questo è il mio portfolio personale, dove raccolgo
-            progetti, esperienze e approfondimenti nel campo
-            dell'informatica.
+            Mi interesso alla progettazione di sistemi informatici
+            che integrano cybersecurity, machine learning,
+            infrastrutture software e dispositivi embedded.
+            In questo portfolio raccolgo progetti, esperienze
+            e approfondimenti sviluppati durante il mio percorso.
         </p>
 
         <div class="hero-actions">
-            <a class="button primary" href="/projects">
+            <a
+                class="button primary"
+                href="/projects"
+            >
                 Esplora i progetti
+            </a>
+
+            <a
+                class="button secondary"
+                href="/about"
+            >
+                Chi sono
             </a>
 
             <a
@@ -68,6 +85,10 @@ const posts = (
         </div>
     </section>
 
+
+    <!-- =====================================================
+         AREE PRINCIPALI
+         ===================================================== -->
 
     <section class="section">
         <div class="section-heading">
@@ -84,34 +105,55 @@ const posts = (
 
         <div class="interests">
             <article>
-                <h3>Cybersecurity</h3>
+                <h3>
+                    Cybersecurity
+                </h3>
 
                 <p>
-                    Sicurezza dei sistemi e delle infrastrutture
-                    informatiche.
+                    Sicurezza dei sistemi, delle reti
+                    e delle infrastrutture informatiche.
                 </p>
             </article>
 
             <article>
-                <h3>Machine Learning</h3>
+                <h3>
+                    Machine Learning
+                </h3>
 
                 <p>
                     Applicazione di tecniche di apprendimento
-                    automatico a problemi reali.
+                    automatico a problemi e sistemi reali.
                 </p>
             </article>
 
             <article>
-                <h3>Systems & Embedded</h3>
+                <h3>
+                    Systems & Embedded
+                </h3>
 
                 <p>
                     Sistemi informatici, elaborazione efficiente
-                    e dispositivi embedded.
+                    e integrazione software-hardware.
+                </p>
+            </article>
+
+            <article>
+                <h3>
+                    Cloud & Infrastructure
+                </h3>
+
+                <p>
+                    Architetture, servizi e infrastrutture
+                    per sistemi distribuiti e applicazioni.
                 </p>
             </article>
         </div>
     </section>
 
+
+    <!-- =====================================================
+         PROGETTI IN EVIDENZA
+         ===================================================== -->
 
     {
         projects.length > 0 && (
@@ -123,7 +165,7 @@ const posts = (
                         </p>
 
                         <h2>
-                            Progetti recenti
+                            Progetti in evidenza
                         </h2>
                     </div>
 
@@ -134,15 +176,23 @@ const posts = (
 
                 <div class="projects">
                     {
-                        projects.map((project) => (
-                            <ProjectCard project={project} />
-                        ))
+                        projects.map(
+                            (project) => (
+                                <ProjectCard
+                                    project={project}
+                                />
+                            )
+                        )
                     }
                 </div>
             </section>
         )
     }
 
+
+    <!-- =====================================================
+         ULTIMI ARTICOLI
+         ===================================================== -->
 
     {
         posts.length > 0 && (
@@ -165,17 +215,58 @@ const posts = (
 
                 <div class="posts">
                     {
-                        posts.map((post) => (
-                            <ArticleCard post={post} />
-                        ))
+                        posts.map(
+                            (post) => (
+                                <ArticleCard
+                                    post={post}
+                                />
+                            )
+                        )
                     }
                 </div>
             </section>
         )
     }
+
+
+    <!-- =====================================================
+         ABOUT CTA
+         ===================================================== -->
+
+    <section class="section">
+        <div class="about-cta">
+            <div>
+                <p class="section-label">
+                    Profilo
+                </p>
+
+                <h2>
+                    Percorso e interessi
+                </h2>
+
+                <p>
+                    Scopri il mio percorso formativo,
+                    gli ambiti che sto approfondendo
+                    e gli obiettivi che guidano i miei progetti.
+                </p>
+            </div>
+
+            <a
+                class="button secondary"
+                href="/about"
+            >
+                Scopri di più
+                <span aria-hidden="true">→</span>
+            </a>
+        </div>
+    </section>
 </Layout>
 
 <style>
+    /* =====================================================
+       HERO
+       ===================================================== */
+
     .hero {
         max-width: 850px;
 
@@ -203,27 +294,40 @@ const posts = (
     }
 
     .hero-description {
-        max-width: 700px;
+        max-width: 750px;
 
         margin-bottom: 2rem;
 
         color: var(--color-text-secondary);
 
-        font-size: clamp(1.1rem, 2vw, 1.3rem);
+        font-size: clamp(
+            1.1rem,
+            2vw,
+            1.3rem
+        );
     }
 
     .hero-actions {
         display: flex;
         flex-wrap: wrap;
+
         gap: 0.75rem;
     }
+
+
+    /* =====================================================
+       BUTTONS
+       ===================================================== */
 
     .button {
         display: inline-flex;
         align-items: center;
         justify-content: center;
 
+        gap: 0.4rem;
+
         min-height: 44px;
+
         padding: 0.65rem 1.1rem;
 
         border: 1px solid transparent;
@@ -259,8 +363,14 @@ const posts = (
     .button.secondary:hover {
         color: var(--color-text);
         background: var(--color-surface);
+
+        border-color: var(--color-primary);
     }
 
+
+    /* =====================================================
+       SECTIONS
+       ===================================================== */
 
     .section {
         padding: 4rem 0;
@@ -289,11 +399,18 @@ const posts = (
     }
 
 
+    /* =====================================================
+       INTERESTS
+       ===================================================== */
+
     .interests {
         display: grid;
 
         grid-template-columns:
-            repeat(auto-fit, minmax(220px, 1fr));
+            repeat(
+                auto-fit,
+                minmax(220px, 1fr)
+            );
 
         gap: 1rem;
     }
@@ -305,6 +422,16 @@ const posts = (
 
         border: 1px solid var(--color-border);
         border-radius: var(--border-radius);
+
+        transition:
+            transform var(--transition),
+            border-color var(--transition);
+    }
+
+    .interests article:hover {
+        transform: translateY(-3px);
+
+        border-color: var(--color-primary);
     }
 
     .interests h3 {
@@ -318,28 +445,85 @@ const posts = (
     }
 
 
+    /* =====================================================
+       PROJECTS
+       ===================================================== */
+
     .projects {
         display: grid;
 
         grid-template-columns:
-            repeat(auto-fit, minmax(280px, 1fr));
+            repeat(
+                auto-fit,
+                minmax(280px, 1fr)
+            );
 
         gap: 1.5rem;
     }
 
 
+    /* =====================================================
+       POSTS
+       ===================================================== */
+
     .posts {
         display: grid;
+
         gap: 1rem;
     }
 
 
-    @media (max-width: 600px) {
+    /* =====================================================
+       ABOUT CTA
+       ===================================================== */
+
+    .about-cta {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 2rem;
+
+        padding: 2rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .about-cta h2 {
+        margin-bottom: 0.75rem;
+    }
+
+    .about-cta p:not(.section-label) {
+        max-width: 650px;
+
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+    }
+
+    .about-cta .button {
+        flex-shrink: 0;
+    }
+
+
+    /* =====================================================
+       RESPONSIVE
+       ===================================================== */
+
+    @media (max-width: 700px) {
         .section {
             padding: 3rem 0;
         }
 
         .section-heading {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .about-cta {
             align-items: flex-start;
             flex-direction: column;
         }
