@@ -24,13 +24,26 @@ posts.sort(
         Articoli, appunti e approfondimenti.
     </p>
 
-    <section class="posts">
-        {
-            posts.map((post) => (
-                <ArticleCard post={post} />
-            ))
-        }
-    </section>
+    {
+        posts.length > 0 ? (
+            <section class="posts">
+                {
+                    posts.map((post) => (
+                        <ArticleCard post={post} />
+                    ))
+                }
+            </section>
+        ) : (
+            <div class="empty-state">
+                <h2>Nessun articolo pubblicato</h2>
+
+                <p>
+                    I primi approfondimenti saranno pubblicati
+                    prossimamente.
+                </p>
+            </div>
+        )
+    }
 </Layout>
 
 <style>
@@ -38,5 +51,27 @@ posts.sort(
         display: grid;
         gap: 1rem;
         margin-top: 2.5rem;
+    }
+
+    .empty-state {
+        margin-top: 3rem;
+        padding: 2rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .empty-state h2 {
+        margin-bottom: 0.5rem;
+
+        font-size: 1.2rem;
+    }
+
+    .empty-state p {
+        margin: 0;
+
+        color: var(--color-text-secondary);
     }
 </style>

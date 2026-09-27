@@ -18,11 +18,16 @@ projects.sort(
     title="Progetti | Alessandro Marchesini"
     description="Progetti personali e universitari di Alessandro Marchesini."
 >
-    <h1>Progetti</h1>
+    <header class="page-header">
+        <p class="eyebrow">Portfolio</p>
 
-    <p>
-        Una raccolta dei progetti che ho realizzato.
-    </p>
+        <h1>Progetti</h1>
+
+        <p class="introduction">
+            Una selezione di progetti accademici e personali
+            nell'ambito dell'ingegneria informatica.
+        </p>
+    </header>
 
     <section class="projects">
         {
@@ -34,6 +39,30 @@ projects.sort(
 </Layout>
 
 <style>
+    .page-header {
+        max-width: 750px;
+    }
+
+    .eyebrow {
+        margin-bottom: 0.75rem;
+
+        color: var(--color-primary);
+
+        font-size: 0.8rem;
+        font-weight: 700;
+
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    .introduction {
+        max-width: 650px;
+
+        color: var(--color-text-secondary);
+
+        font-size: 1.1rem;
+    }
+
     .projects {
         display: grid;
 
@@ -42,6 +71,6 @@ projects.sort(
 
         gap: 1.5rem;
 
-        margin-top: 2.5rem;
+        margin-top: 3rem;
     }
 </style>

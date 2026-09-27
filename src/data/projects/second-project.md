@@ -11,7 +11,7 @@ tags:
 
 status: "in-progress"
 featured: false
-draft: false
+draft: true
 ---
 
 # Secondo progetto
