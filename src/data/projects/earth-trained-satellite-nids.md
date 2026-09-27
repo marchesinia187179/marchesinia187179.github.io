@@ -6,11 +6,16 @@ date: 2026-09-01
 period: "2025–2026"
 
 tags:
-  - Cybersecurity
-  - Machine Learning
-  - NIDS
-  - Satellite Networks
-  - Python
+  areas:
+    - Cybersecurity
+    - Machine Learning
+
+  technologies:
+    - NIDS
+    - Satellite Networks
+
+  languages:
+    - Python
 
 github: "https://github.com/marchesinia187179/earth-trained-satellite-ids"
 

@@ -12,7 +12,11 @@ const blog = defineCollection({
         title: z.string(),
         description: z.string(),
         date: z.coerce.date(),
-        tags: z.array(z.string()).default([]),
+        tags: z.object({
+            areas: z.array(z.string()).default([]),
+            technologies: z.array(z.string()).default([]),
+            languages: z.array(z.string()).default([]),
+        }),
         draft: z.boolean().default(false),
     }),
 });
@@ -30,7 +34,11 @@ const projects = defineCollection({
         date: z.coerce.date(),
         period: z.string().optional(),
 
-        tags: z.array(z.string()).default([]),
+        tags: z.object({
+            areas: z.array(z.string()).default([]),
+            technologies: z.array(z.string()).default([]),
+            languages: z.array(z.string()).default([]),
+        }),
 
         image: z.string().optional(),
         imageAlt: z.string().optional(),

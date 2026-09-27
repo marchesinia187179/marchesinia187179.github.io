@@ -3,9 +3,12 @@ title: "My first article"
 description: "This is my first article of my new blog."
 date: 2026-09-22
 tags:
-  - Astro
-  - Web
-draft: true
+  areas:
+    - Scuola
+  
+  languages:
+    - Italiano
+draft: false
 ---
 
 # My first article

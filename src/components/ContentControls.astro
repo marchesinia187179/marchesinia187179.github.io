@@ -1,0 +1,1003 @@
+---
+interface Filters {
+    areas: string[];
+    technologies: string[];
+    languages: string[];
+}
+
+interface Props {
+    filters: Filters;
+    target: string;
+    placeholder?: string;
+    singularLabel?: string;
+    pluralLabel?: string;
+}
+
+const {
+    filters,
+    target,
+    placeholder = "Cerca...",
+    singularLabel = "risultato",
+    pluralLabel = "risultati",
+} = Astro.props;
+
+const filterGroups = [
+    {
+        key: "areas",
+        label: "Aree",
+        values: filters.areas,
+    },
+    {
+        key: "technologies",
+        label: "Tecnologie",
+        values: filters.technologies,
+    },
+    {
+        key: "languages",
+        label: "Linguaggi",
+        values: filters.languages,
+    },
+].filter((group) => group.values.length > 0);
+---
+
+<div
+    class="content-controls"
+    data-content-controls
+    data-target={target}
+    data-singular-label={singularLabel}
+    data-plural-label={pluralLabel}
+>
+    <div class="search">
+        <label
+            class="control-label"
+            for={`search-${target}`}
+        >
+            Cerca
+        </label>
+
+        <div class="search-control">
+            <input
+                id={`search-${target}`}
+                type="search"
+                placeholder={placeholder}
+                autocomplete="off"
+                data-search-input
+            />
+
+            <button
+                class="clear-button"
+                type="button"
+                aria-label="Cancella ricerca"
+                title="Cancella ricerca"
+                data-search-clear
+                hidden
+            >
+                ×
+            </button>
+        </div>
+    </div>
+
+    {
+        filterGroups.length > 0 && (
+            <div class="filters">
+                <p class="control-label">
+                    Filtri
+                </p>
+
+                <div class="filter-categories">
+                    {
+                        filterGroups.map((group) => (
+                            <button
+                                class="category-button"
+                                type="button"
+                                data-category-toggle={group.key}
+                                aria-expanded="false"
+                            >
+                                <span>{group.label}</span>
+
+                                <span
+                                    class="category-count"
+                                    data-category-count={group.key}
+                                    hidden
+                                >
+                                    0
+                                </span>
+
+                                <span
+                                    class="category-arrow"
+                                    aria-hidden="true"
+                                >
+                                    ▾
+                                </span>
+                            </button>
+                        ))
+                    }
+                </div>
+
+                {
+                    filterGroups.map((group) => (
+                        <div
+                            class="filter-panel"
+                            data-category-panel={group.key}
+                            hidden
+                        >
+                            <div
+                                class="filter-bar"
+                                aria-label={`Filtra per ${group.label.toLowerCase()}`}
+                            >
+                                {
+                                    group.values.map((value) => (
+                                        <button
+                                            class="filter"
+                                            type="button"
+                                            data-filter-category={group.key}
+                                            data-filter-value={value}
+                                            aria-pressed="false"
+                                        >
+                                            {value}
+                                        </button>
+                                    ))
+                                }
+                            </div>
+                        </div>
+                    ))
+                }
+            </div>
+        )
+    }
+
+    <div class="results-summary">
+        <p
+            class="results-count"
+            data-results-count
+            aria-live="polite"
+        >
+        </p>
+
+        <button
+            class="reset-all"
+            type="button"
+            data-reset-controls
+            hidden
+        >
+            Reimposta
+        </button>
+    </div>
+
+    <div
+        class="no-results"
+        data-no-results
+        hidden
+    >
+        <h2>Nessun risultato</h2>
+
+        <p>
+            Prova a modificare la ricerca o i filtri selezionati.
+        </p>
+
+        <button
+            class="reset-button"
+            type="button"
+            data-reset-controls
+        >
+            Reimposta ricerca e filtri
+        </button>
+    </div>
+</div>
+
+<style>
+    .content-controls {
+        margin-top: 2rem;
+    }
+
+    .control-label {
+        display: block;
+
+        margin: 0 0 0.75rem;
+
+        color: var(--color-text-secondary);
+
+        font-size: 0.85rem;
+        font-weight: 600;
+    }
+
+    /* =====================================================
+       SEARCH
+       ===================================================== */
+
+    .search-control {
+        position: relative;
+
+        max-width: 500px;
+    }
+
+    .search-control input {
+        width: 100%;
+
+        padding: 0.75rem 2.75rem 0.75rem 1rem;
+
+        color: var(--color-text);
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+
+        font: inherit;
+
+        transition:
+            border-color var(--transition),
+            background var(--transition);
+    }
+
+    .search-control input:hover {
+        border-color: var(--color-text-secondary);
+    }
+
+    .search-control input:focus {
+        border-color: var(--color-primary);
+        outline: none;
+    }
+
+    .search-control input::placeholder {
+        color: var(--color-text-secondary);
+    }
+
+    .clear-button {
+        position: absolute;
+
+        top: 50%;
+        right: 0.65rem;
+
+        width: 30px;
+        height: 30px;
+
+        padding: 0;
+
+        transform: translateY(-50%);
+
+        color: var(--color-text-secondary);
+        background: transparent;
+
+        border: 0;
+        border-radius: 6px;
+
+        font-size: 1.25rem;
+
+        cursor: pointer;
+    }
+
+    .clear-button:hover {
+        color: var(--color-text);
+        background: var(--color-background);
+    }
+
+    /* =====================================================
+    FILTERS
+    ===================================================== */
+
+    .filters {
+        margin-top: 1.5rem;
+    }
+
+    .filter-categories {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 0.5rem;
+    }
+
+    .category-button {
+        display: inline-flex;
+        align-items: center;
+
+        gap: 0.45rem;
+
+        padding: 0.55rem 0.8rem;
+
+        color: var(--color-text);
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            color var(--transition),
+            background var(--transition),
+            border-color var(--transition);
+    }
+
+    .category-button:hover,
+    .category-button.open {
+        border-color: var(--color-primary);
+    }
+
+    .category-button.has-selection {
+        color: var(--color-primary);
+        border-color: var(--color-primary);
+    }
+
+    .category-count {
+        min-width: 1.25rem;
+
+        padding: 0.05rem 0.35rem;
+
+        color: var(--color-on-primary);
+        background: var(--color-primary);
+
+        border-radius: 999px;
+
+        font-size: 0.7rem;
+        text-align: center;
+    }
+
+    .category-arrow {
+        color: var(--color-text-secondary);
+
+        transition: transform var(--transition);
+    }
+
+    .category-button.open .category-arrow {
+        transform: rotate(180deg);
+    }
+
+
+    /* Pannello contenente i tag */
+
+    .filter-panel {
+        margin-top: 0.75rem;
+        padding: 1rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .filter-bar {
+        display: flex;
+        flex-wrap: wrap;
+
+        gap: 0.5rem;
+    }
+
+
+    /* Singolo tag */
+
+    .filter {
+        padding: 0.45rem 0.8rem;
+
+        color: var(--color-text-secondary);
+        background: var(--color-background);
+
+        border: 1px solid var(--color-border);
+        border-radius: 999px;
+
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 500;
+
+        cursor: pointer;
+
+        transition:
+            color var(--transition),
+            background var(--transition),
+            border-color var(--transition);
+    }
+
+    .filter:hover {
+        color: var(--color-text);
+
+        border-color: var(--color-primary);
+    }
+
+    .filter.active {
+        color: var(--color-on-primary);
+        background: var(--color-primary);
+
+        border-color: var(--color-primary);
+    }
+
+
+    /* =====================================================
+       RESULTS SUMMARY
+       ===================================================== */
+
+    .results-summary {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+
+        gap: 1rem;
+
+        margin-top: 1.5rem;
+    }
+
+    .results-count {
+        margin: 0;
+
+        color: var(--color-text-secondary);
+
+        font-size: 0.85rem;
+    }
+
+    .reset-all {
+        padding: 0;
+
+        color: var(--color-primary);
+        background: transparent;
+
+        border: 0;
+
+        font: inherit;
+        font-size: 0.85rem;
+        font-weight: 600;
+
+        cursor: pointer;
+    }
+
+    .reset-all:hover {
+        color: var(--color-primary-hover);
+    }
+
+    /* =====================================================
+       NO RESULTS
+       ===================================================== */
+
+    .no-results {
+        margin-top: 1.5rem;
+        padding: 2rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .no-results h2 {
+        margin-bottom: 0.5rem;
+
+        font-size: 1.2rem;
+    }
+
+    .no-results p {
+        margin-bottom: 1.25rem;
+
+        color: var(--color-text-secondary);
+    }
+
+    .reset-button {
+        padding: 0.6rem 0.9rem;
+
+        color: var(--color-text);
+        background: var(--color-background);
+
+        border: 1px solid var(--color-border);
+        border-radius: 8px;
+
+        font: inherit;
+        font-weight: 600;
+
+        cursor: pointer;
+
+        transition:
+            color var(--transition),
+            border-color var(--transition);
+    }
+
+    .reset-button:hover {
+        color: var(--color-primary);
+
+        border-color: var(--color-primary);
+    }
+</style>
+
+<script>
+    const controls =
+        document.querySelectorAll(
+            "[data-content-controls]"
+        );
+
+    controls.forEach((control) => {
+        const target =
+            control.getAttribute("data-target");
+
+        if (!target) {
+            return;
+        }
+
+        const input =
+            control.querySelector(
+                "[data-search-input]"
+            );
+
+        const clearButton =
+            control.querySelector(
+                "[data-search-clear]"
+            );
+
+        const filterButtons =
+            control.querySelectorAll(
+                "[data-filter-category][data-filter-value]"
+            );
+
+        const categoryButtons =
+            control.querySelectorAll(
+                "[data-category-toggle]"
+            );
+
+        const categoryPanels =
+            control.querySelectorAll(
+                "[data-category-panel]"
+            );
+
+        const categoryCounts =
+            control.querySelectorAll(
+                "[data-category-count]"
+            );
+
+        const resultsCount =
+            control.querySelector(
+                "[data-results-count]"
+            );
+
+        const noResults =
+            control.querySelector(
+                "[data-no-results]"
+            );
+
+        const resetButtons =
+            control.querySelectorAll(
+                "[data-reset-controls]"
+            );
+
+        if (
+            !(input instanceof HTMLInputElement) ||
+            !(clearButton instanceof HTMLButtonElement) ||
+            !(resultsCount instanceof HTMLElement) ||
+            !(noResults instanceof HTMLElement)
+        ) {
+            return;
+        }
+
+        const items =
+            Array.from(
+                document.querySelectorAll(
+                    `[data-filter-group="${target}"]`
+                )
+            ).filter(
+                (item): item is HTMLElement =>
+                    item instanceof HTMLElement
+            );
+
+        const singularLabel =
+            control.getAttribute(
+                "data-singular-label"
+            ) ?? "risultato";
+
+        const pluralLabel =
+            control.getAttribute(
+                "data-plural-label"
+            ) ?? "risultati";
+
+        const selectedFilters: Record<
+            string,
+            Set<string>
+        > = {
+            areas: new Set(),
+            technologies: new Set(),
+            languages: new Set(),
+        };
+
+
+        /* =================================================
+           CENTRAL UPDATE
+           ================================================= */
+
+        const updateResults = () => {
+            const query =
+                input.value
+                    .trim()
+                    .toLocaleLowerCase("it");
+
+            let visibleCount = 0;
+
+            items.forEach((item) => {
+                const searchableText =
+                    item.dataset.search ?? "";
+
+                const matchesSearch =
+                    query.length === 0 ||
+                    searchableText.includes(query);
+
+                const matchesCategories =
+                    Object.entries(
+                        selectedFilters
+                    ).every(
+                        ([
+                            category,
+                            selectedValues,
+                        ]) => {
+                            /*
+                             * Nessun filtro selezionato
+                             * nella categoria:
+                             * la categoria non limita
+                             * il risultato.
+                             */
+                            if (
+                                selectedValues.size === 0
+                            ) {
+                                return true;
+                            }
+
+                            const itemValues =
+                                (
+                                    item.dataset[
+                                        category
+                                    ] ?? ""
+                                )
+                                    .split("|")
+                                    .filter(Boolean);
+
+                            /*
+                             * OR nella stessa categoria.
+                             *
+                             * È sufficiente che almeno
+                             * uno dei valori selezionati
+                             * sia presente nella card.
+                             */
+                            return [
+                                ...selectedValues,
+                            ].some(
+                                (selectedValue) =>
+                                    itemValues.includes(
+                                        selectedValue
+                                    )
+                            );
+                        }
+                    );
+
+                /*
+                 * AND tra ricerca e categorie.
+                 */
+                const shouldShow =
+                    matchesSearch &&
+                    matchesCategories;
+
+                item.hidden = !shouldShow;
+
+                if (shouldShow) {
+                    visibleCount++;
+                }
+            });
+
+            const hasSearch =
+                query.length > 0;
+
+            const hasFilters =
+                Object.values(
+                    selectedFilters
+                ).some(
+                    (values) =>
+                        values.size > 0
+                );
+
+            const hasActiveControls =
+                hasSearch || hasFilters;
+
+            clearButton.hidden =
+                !hasSearch;
+
+            resetButtons.forEach(
+                (button) => {
+                    if (
+                        button.classList.contains(
+                            "reset-all"
+                        )
+                    ) {
+                        (
+                            button as HTMLElement
+                        ).hidden =
+                            !hasActiveControls;
+                    }
+                }
+            );
+
+            categoryCounts.forEach((counter) => {
+                const category =
+                    counter.getAttribute(
+                        "data-category-count"
+                    );
+
+                if (
+                    !category ||
+                    !selectedFilters[category]
+                ) {
+                    return;
+                }
+
+                const count =
+                    selectedFilters[
+                        category
+                    ].size;
+
+                counter.textContent =
+                    String(count);
+
+                if (counter instanceof HTMLElement) {
+                    counter.hidden =
+                        count === 0;
+                }
+
+                const categoryButton =
+                    control.querySelector(
+                        `[data-category-toggle="${category}"]`
+                    );
+
+                categoryButton?.classList.toggle(
+                    "has-selection",
+                    count > 0
+                );
+            });
+
+            const label =
+                visibleCount === 1
+                    ? singularLabel
+                    : pluralLabel;
+
+            resultsCount.textContent =
+                `${visibleCount} ${label}`;
+
+            noResults.hidden =
+                visibleCount !== 0;
+        };
+
+
+        /* =================================================
+           SEARCH
+           ================================================= */
+
+        input.addEventListener(
+            "input",
+            updateResults
+        );
+
+        clearButton.addEventListener(
+            "click",
+            () => {
+                input.value = "";
+
+                updateResults();
+
+                input.focus();
+            }
+        );
+
+
+        /* =================================================
+           FILTER CATEGORY PANELS
+           ================================================= */
+
+        categoryButtons.forEach((button) => {
+            button.addEventListener(
+                "click",
+                () => {
+                    const category =
+                        button.getAttribute(
+                            "data-category-toggle"
+                        );
+
+                    if (!category) {
+                        return;
+                    }
+
+                    const panel =
+                        control.querySelector(
+                            `[data-category-panel="${category}"]`
+                        );
+
+                    if (!(panel instanceof HTMLElement)) {
+                        return;
+                    }
+
+                    const isOpen =
+                        button.getAttribute(
+                            "aria-expanded"
+                        ) === "true";
+
+
+                    /*
+                    * Chiude eventuali altre categorie.
+                    */
+                    categoryButtons.forEach(
+                        (currentButton) => {
+                            currentButton.setAttribute(
+                                "aria-expanded",
+                                "false"
+                            );
+
+                            currentButton.classList.remove(
+                                "open"
+                            );
+                        }
+                    );
+
+                    categoryPanels.forEach(
+                        (currentPanel) => {
+                            if (
+                                currentPanel instanceof HTMLElement
+                            ) {
+                                currentPanel.hidden = true;
+                            }
+                        }
+                    );
+
+
+                    /*
+                    * Se la categoria cliccata era chiusa,
+                    * la apre.
+                    */
+                    if (!isOpen) {
+                        button.setAttribute(
+                            "aria-expanded",
+                            "true"
+                        );
+
+                        button.classList.add(
+                            "open"
+                        );
+
+                        panel.hidden = false;
+                    }
+                }
+            );
+        });
+
+
+        /* =================================================
+           MULTI-CATEGORY FILTERS
+           ================================================= */
+
+        filterButtons.forEach((button) => {
+            button.addEventListener(
+                "click",
+                () => {
+                    const category =
+                        button.getAttribute(
+                            "data-filter-category"
+                        );
+
+                    const value =
+                        button.getAttribute(
+                            "data-filter-value"
+                        );
+
+                    if (
+                        !category ||
+                        !value ||
+                        !selectedFilters[
+                            category
+                        ]
+                    ) {
+                        return;
+                    }
+
+                    const categoryFilters =
+                        selectedFilters[
+                            category
+                        ];
+
+                    if (
+                        categoryFilters.has(
+                            value
+                        )
+                    ) {
+                        categoryFilters.delete(
+                            value
+                        );
+                    } else {
+                        categoryFilters.add(
+                            value
+                        );
+                    }
+
+                    const isActive =
+                        categoryFilters.has(
+                            value
+                        );
+
+                    button.classList.toggle(
+                        "active",
+                        isActive
+                    );
+
+                    button.setAttribute(
+                        "aria-pressed",
+                        String(isActive)
+                    );
+
+                    updateResults();
+                }
+            );
+        });
+
+
+        /* =================================================
+           RESET
+           ================================================= */
+
+        const resetControls = () => {
+            input.value = "";
+
+            Object.values(
+                selectedFilters
+            ).forEach(
+                (values) =>
+                    values.clear()
+            );
+
+            filterButtons.forEach(
+                (button) => {
+                    button.classList.remove(
+                        "active"
+                    );
+
+                    button.setAttribute(
+                        "aria-pressed",
+                        "false"
+                    );
+                }
+            );
+
+            categoryButtons.forEach(
+                (button) => {
+                    button.setAttribute(
+                        "aria-expanded",
+                        "false"
+                    );
+
+                    button.classList.remove(
+                        "open"
+                    );
+                }
+            );
+
+            categoryPanels.forEach(
+                (panel) => {
+                    if (
+                        panel instanceof HTMLElement
+                    ) {
+                        panel.hidden = true;
+                    }
+                }
+            );
+
+            updateResults();
+        };
+
+        resetButtons.forEach(
+            (button) => {
+                button.addEventListener(
+                    "click",
+                    () => {
+                        resetControls();
+
+                        input.focus();
+                    }
+                );
+            }
+        );
+
+
+        /* =================================================
+           INITIAL STATE
+           ================================================= */
+
+        updateResults();
+    });
+</script>

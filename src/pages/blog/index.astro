@@ -1,8 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
-import FilterBar from "../../components/FilterBar.astro";
-import ContentSearch from "../../components/ContentSearch.astro";
+import ContentControls from "../../components/ContentControls.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection(
@@ -12,18 +11,43 @@ const posts = await getCollection(
 
 posts.sort(
     (a, b) =>
-        b.data.date.valueOf() - a.data.date.valueOf()
+        b.data.date.valueOf() -
+        a.data.date.valueOf()
 );
 
-const tags = [
-    ...new Set(
-        posts.flatMap(
-            (post) => post.data.tags
+const filters = {
+    areas: [
+        ...new Set(
+            posts.flatMap(
+                (post) => post.data.tags.areas
+            )
         )
-    )
-].sort((a, b) =>
-    a.localeCompare(b, "it")
-);
+    ].sort((a, b) =>
+        a.localeCompare(b, "it")
+    ),
+
+    technologies: [
+        ...new Set(
+            posts.flatMap(
+                (post) =>
+                    post.data.tags.technologies
+            )
+        )
+    ].sort((a, b) =>
+        a.localeCompare(b, "it")
+    ),
+
+    languages: [
+        ...new Set(
+            posts.flatMap(
+                (post) =>
+                    post.data.tags.languages
+            )
+        )
+    ].sort((a, b) =>
+        a.localeCompare(b, "it")
+    ),
+};
 ---
 
 <Layout
@@ -39,14 +63,12 @@ const tags = [
     {
         posts.length > 0 ? (
             <>
-                <ContentSearch
+                <ContentControls
+                    filters={filters}
                     target="blog"
                     placeholder="Cerca negli articoli..."
-                />
-
-                <FilterBar
-                    tags={tags}
-                    target="blog"
+                    singularLabel="articolo"
+                    pluralLabel="articoli"
                 />
 
                 <section class="posts">

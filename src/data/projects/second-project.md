@@ -6,12 +6,18 @@ date: 2026-09-20
 period: "2026"
 
 tags:
-  - C
-  - Embedded
+  areas:
+    - Embedded
+
+  technologies:
+    - NIDS
+
+  languages:
+    - C
 
 status: "in-progress"
 featured: false
-draft: true
+draft: false
 ---
 
 # Secondo progetto

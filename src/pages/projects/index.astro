@@ -1,8 +1,7 @@
 ---
 import Layout from "../../layouts/Layout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
-import FilterBar from "../../components/FilterBar.astro";
-import ContentSearch from "../../components/ContentSearch.astro";
+import ContentControls from "../../components/ContentControls.astro";
 import { getCollection } from "astro:content";
 
 const projects = await getCollection(
@@ -15,15 +14,40 @@ projects.sort(
         b.data.date.valueOf() - a.data.date.valueOf()
 );
 
-const tags = [
-    ...new Set(
-        projects.flatMap(
-            (project) => project.data.tags
+const filters = {
+    areas: [
+        ...new Set(
+            projects.flatMap(
+                (project) =>
+                    project.data.tags.areas
+            )
         )
-    )
-].sort((a, b) =>
-    a.localeCompare(b, "it")
-);
+    ].sort((a, b) =>
+        a.localeCompare(b, "it")
+    ),
+
+    technologies: [
+        ...new Set(
+            projects.flatMap(
+                (project) =>
+                    project.data.tags.technologies
+            )
+        )
+    ].sort((a, b) =>
+        a.localeCompare(b, "it")
+    ),
+
+    languages: [
+        ...new Set(
+            projects.flatMap(
+                (project) =>
+                    project.data.tags.languages
+            )
+        )
+    ].sort((a, b) =>
+        a.localeCompare(b, "it")
+    ),
+};
 ---
 
 <Layout
@@ -44,14 +68,12 @@ const tags = [
     {
         projects.length > 0 ? (
             <>
-                <ContentSearch
+                <ContentControls
+                    filters={filters}
                     target="projects"
                     placeholder="Cerca nei progetti..."
-                />
-
-                <FilterBar
-                    tags={tags}
-                    target="projects"
+                    singularLabel="progetto"
+                    pluralLabel="progetti"
                 />
 
                 <section class="projects">

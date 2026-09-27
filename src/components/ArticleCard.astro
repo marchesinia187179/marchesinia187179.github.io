@@ -7,16 +7,24 @@ interface Props {
 }
 
 const { post } = Astro.props;
+
+const allTags = [
+    ...post.data.tags.areas,
+    ...post.data.tags.technologies,
+    ...post.data.tags.languages,
+];
 ---
 
 <article
     class="card"
     data-filter-group="blog"
-    data-tags={post.data.tags.join("|")}
+    data-tags={allTags.join("|")}
+    data-areas={post.data.tags.areas.join("|")}
+    data-technologies={post.data.tags.technologies.join("|")}
+    data-languages={post.data.tags.languages.join("|")}
     data-search={[
         post.data.title,
-        post.data.description,
-        ...post.data.tags
+        post.data.description
     ]
         .join(" ")
         .toLocaleLowerCase("it")}
