@@ -272,8 +272,8 @@ const filterGroups = [
     }
 
     /* =====================================================
-    FILTERS
-    ===================================================== */
+       FILTERS
+       ===================================================== */
 
     .filters {
         margin-top: 1.5rem;
@@ -346,9 +346,6 @@ const filterGroups = [
         transform: rotate(180deg);
     }
 
-
-    /* Pannello contenente i tag */
-
     .filter-panel {
         margin-top: 0.75rem;
         padding: 1rem;
@@ -365,9 +362,6 @@ const filterGroups = [
 
         gap: 0.5rem;
     }
-
-
-    /* Singolo tag */
 
     .filter {
         padding: 0.45rem 0.8rem;
@@ -402,7 +396,6 @@ const filterGroups = [
 
         border-color: var(--color-primary);
     }
-
 
     /* =====================================================
        RESULTS SUMMARY
@@ -594,6 +587,189 @@ const filterGroups = [
             languages: new Set(),
         };
 
+        /*
+         * Nome interno della categoria -> nome del
+         * parametro utilizzato nell'URL.
+         */
+        const urlParameters: Record<string, string> = {
+            areas: "area",
+            technologies: "technology",
+            languages: "language",
+        };
+
+
+        /* =================================================
+           URL
+           ================================================= */
+
+        const updateUrl = (
+            mode: "push" | "replace" = "replace"
+        ) => {
+            const params =
+                new URLSearchParams();
+
+            const query =
+                input.value.trim();
+
+            if (query.length > 0) {
+                params.set("q", query);
+            }
+
+            Object.entries(
+                selectedFilters
+            ).forEach(
+                ([category, values]) => {
+                    const parameter =
+                        urlParameters[
+                            category
+                        ];
+
+                    if (!parameter) {
+                        return;
+                    }
+
+                    values.forEach(
+                        (value) => {
+                            params.append(
+                                parameter,
+                                value
+                            );
+                        }
+                    );
+                }
+            );
+
+            const queryString =
+                params.toString();
+
+            const newUrl =
+                queryString.length > 0
+                    ? `${window.location.pathname}?${queryString}`
+                    : window.location.pathname;
+
+            if (mode === "push") {
+                window.history.pushState(
+                    null,
+                    "",
+                    newUrl
+                );
+            } else {
+                window.history.replaceState(
+                    null,
+                    "",
+                    newUrl
+                );
+            }
+        };
+
+
+        const restoreStateFromUrl = () => {
+            const params =
+                new URLSearchParams(
+                    window.location.search
+                );
+
+            input.value =
+                params.get("q") ?? "";
+
+            Object.values(
+                selectedFilters
+            ).forEach(
+                (values) => {
+                    values.clear();
+                }
+            );
+
+            Object.entries(
+                urlParameters
+            ).forEach(
+                ([
+                    category,
+                    parameter,
+                ]) => {
+                    const validValues =
+                        new Set<string>();
+
+                    filterButtons.forEach(
+                        (button) => {
+                            if (
+                                button.getAttribute(
+                                    "data-filter-category"
+                                ) !== category
+                            ) {
+                                return;
+                            }
+
+                            const value =
+                                button.getAttribute(
+                                    "data-filter-value"
+                                );
+
+                            if (value) {
+                                validValues.add(
+                                    value
+                                );
+                            }
+                        }
+                    );
+
+                    params
+                        .getAll(parameter)
+                        .forEach(
+                            (value) => {
+                                /*
+                                 * Ignora valori URL che non
+                                 * corrispondono a filtri
+                                 * realmente disponibili.
+                                 */
+                                if (
+                                    validValues.has(
+                                        value
+                                    )
+                                ) {
+                                    selectedFilters[
+                                        category
+                                    ].add(value);
+                                }
+                            }
+                        );
+                }
+            );
+
+            filterButtons.forEach(
+                (button) => {
+                    const category =
+                        button.getAttribute(
+                            "data-filter-category"
+                        );
+
+                    const value =
+                        button.getAttribute(
+                            "data-filter-value"
+                        );
+
+                    const isActive =
+                        Boolean(
+                            category &&
+                            value &&
+                            selectedFilters[
+                                category
+                            ]?.has(value)
+                        );
+
+                    button.classList.toggle(
+                        "active",
+                        isActive
+                    );
+
+                    button.setAttribute(
+                        "aria-pressed",
+                        String(isActive)
+                    );
+                }
+            );
+        };
+
 
         /* =================================================
            CENTRAL UPDATE
@@ -613,7 +789,9 @@ const filterGroups = [
 
                 const matchesSearch =
                     query.length === 0 ||
-                    searchableText.includes(query);
+                    searchableText.includes(
+                        query
+                    );
 
                 const matchesCategories =
                     Object.entries(
@@ -624,8 +802,7 @@ const filterGroups = [
                             selectedValues,
                         ]) => {
                             /*
-                             * Nessun filtro selezionato
-                             * nella categoria:
+                             * Nessun filtro selezionato:
                              * la categoria non limita
                              * il risultato.
                              */
@@ -646,10 +823,6 @@ const filterGroups = [
 
                             /*
                              * OR nella stessa categoria.
-                             *
-                             * È sufficiente che almeno
-                             * uno dei valori selezionati
-                             * sia presente nella card.
                              */
                             return [
                                 ...selectedValues,
@@ -669,7 +842,8 @@ const filterGroups = [
                     matchesSearch &&
                     matchesCategories;
 
-                item.hidden = !shouldShow;
+                item.hidden =
+                    !shouldShow;
 
                 if (shouldShow) {
                     visibleCount++;
@@ -688,7 +862,8 @@ const filterGroups = [
                 );
 
             const hasActiveControls =
-                hasSearch || hasFilters;
+                hasSearch ||
+                hasFilters;
 
             clearButton.hidden =
                 !hasSearch;
@@ -698,52 +873,58 @@ const filterGroups = [
                     if (
                         button.classList.contains(
                             "reset-all"
-                        )
+                        ) &&
+                        button instanceof HTMLElement
                     ) {
-                        (
-                            button as HTMLElement
-                        ).hidden =
+                        button.hidden =
                             !hasActiveControls;
                     }
                 }
             );
 
-            categoryCounts.forEach((counter) => {
-                const category =
-                    counter.getAttribute(
-                        "data-category-count"
-                    );
+            categoryCounts.forEach(
+                (counter) => {
+                    const category =
+                        counter.getAttribute(
+                            "data-category-count"
+                        );
 
-                if (
-                    !category ||
-                    !selectedFilters[category]
-                ) {
-                    return;
+                    if (
+                        !category ||
+                        !selectedFilters[
+                            category
+                        ]
+                    ) {
+                        return;
+                    }
+
+                    const count =
+                        selectedFilters[
+                            category
+                        ].size;
+
+                    counter.textContent =
+                        String(count);
+
+                    if (
+                        counter instanceof HTMLElement
+                    ) {
+                        counter.hidden =
+                            count === 0;
+                    }
+
+                    const categoryButton =
+                        control.querySelector(
+                            `[data-category-toggle="${category}"]`
+                        );
+
+                    categoryButton
+                        ?.classList.toggle(
+                            "has-selection",
+                            count > 0
+                        );
                 }
-
-                const count =
-                    selectedFilters[
-                        category
-                    ].size;
-
-                counter.textContent =
-                    String(count);
-
-                if (counter instanceof HTMLElement) {
-                    counter.hidden =
-                        count === 0;
-                }
-
-                const categoryButton =
-                    control.querySelector(
-                        `[data-category-toggle="${category}"]`
-                    );
-
-                categoryButton?.classList.toggle(
-                    "has-selection",
-                    count > 0
-                );
-            });
+            );
 
             const label =
                 visibleCount === 1
@@ -764,7 +945,16 @@ const filterGroups = [
 
         input.addEventListener(
             "input",
-            updateResults
+            () => {
+                updateResults();
+
+                /*
+                 * replaceState evita di creare una
+                 * voce nella cronologia per ogni
+                 * carattere digitato.
+                 */
+                updateUrl("replace");
+            }
         );
 
         clearButton.addEventListener(
@@ -773,6 +963,7 @@ const filterGroups = [
                 input.value = "";
 
                 updateResults();
+                updateUrl("push");
 
                 input.focus();
             }
@@ -783,162 +974,190 @@ const filterGroups = [
            FILTER CATEGORY PANELS
            ================================================= */
 
-        categoryButtons.forEach((button) => {
-            button.addEventListener(
-                "click",
-                () => {
-                    const category =
-                        button.getAttribute(
-                            "data-category-toggle"
-                        );
-
-                    if (!category) {
-                        return;
-                    }
-
-                    const panel =
-                        control.querySelector(
-                            `[data-category-panel="${category}"]`
-                        );
-
-                    if (!(panel instanceof HTMLElement)) {
-                        return;
-                    }
-
-                    const isOpen =
-                        button.getAttribute(
-                            "aria-expanded"
-                        ) === "true";
-
-
-                    /*
-                    * Chiude eventuali altre categorie.
-                    */
-                    categoryButtons.forEach(
-                        (currentButton) => {
-                            currentButton.setAttribute(
-                                "aria-expanded",
-                                "false"
+        categoryButtons.forEach(
+            (button) => {
+                button.addEventListener(
+                    "click",
+                    () => {
+                        const category =
+                            button.getAttribute(
+                                "data-category-toggle"
                             );
 
-                            currentButton.classList.remove(
+                        if (!category) {
+                            return;
+                        }
+
+                        const panel =
+                            control.querySelector(
+                                `[data-category-panel="${category}"]`
+                            );
+
+                        if (
+                            !(
+                                panel instanceof
+                                HTMLElement
+                            )
+                        ) {
+                            return;
+                        }
+
+                        const isOpen =
+                            button.getAttribute(
+                                "aria-expanded"
+                            ) === "true";
+
+                        /*
+                         * Chiude eventuali altre
+                         * categorie.
+                         */
+                        categoryButtons.forEach(
+                            (
+                                currentButton
+                            ) => {
+                                currentButton
+                                    .setAttribute(
+                                        "aria-expanded",
+                                        "false"
+                                    );
+
+                                currentButton
+                                    .classList
+                                    .remove(
+                                        "open"
+                                    );
+                            }
+                        );
+
+                        categoryPanels.forEach(
+                            (
+                                currentPanel
+                            ) => {
+                                if (
+                                    currentPanel instanceof
+                                    HTMLElement
+                                ) {
+                                    currentPanel.hidden =
+                                        true;
+                                }
+                            }
+                        );
+
+                        /*
+                         * Se la categoria cliccata
+                         * era chiusa, la apre.
+                         */
+                        if (!isOpen) {
+                            button.setAttribute(
+                                "aria-expanded",
+                                "true"
+                            );
+
+                            button.classList.add(
                                 "open"
                             );
+
+                            panel.hidden =
+                                false;
                         }
-                    );
-
-                    categoryPanels.forEach(
-                        (currentPanel) => {
-                            if (
-                                currentPanel instanceof HTMLElement
-                            ) {
-                                currentPanel.hidden = true;
-                            }
-                        }
-                    );
-
-
-                    /*
-                    * Se la categoria cliccata era chiusa,
-                    * la apre.
-                    */
-                    if (!isOpen) {
-                        button.setAttribute(
-                            "aria-expanded",
-                            "true"
-                        );
-
-                        button.classList.add(
-                            "open"
-                        );
-
-                        panel.hidden = false;
                     }
-                }
-            );
-        });
+                );
+            }
+        );
 
 
         /* =================================================
            MULTI-CATEGORY FILTERS
            ================================================= */
 
-        filterButtons.forEach((button) => {
-            button.addEventListener(
-                "click",
-                () => {
-                    const category =
-                        button.getAttribute(
-                            "data-filter-category"
+        filterButtons.forEach(
+            (button) => {
+                button.addEventListener(
+                    "click",
+                    () => {
+                        const category =
+                            button.getAttribute(
+                                "data-filter-category"
+                            );
+
+                        const value =
+                            button.getAttribute(
+                                "data-filter-value"
+                            );
+
+                        if (
+                            !category ||
+                            !value ||
+                            !selectedFilters[
+                                category
+                            ]
+                        ) {
+                            return;
+                        }
+
+                        const categoryFilters =
+                            selectedFilters[
+                                category
+                            ];
+
+                        if (
+                            categoryFilters.has(
+                                value
+                            )
+                        ) {
+                            categoryFilters.delete(
+                                value
+                            );
+                        } else {
+                            categoryFilters.add(
+                                value
+                            );
+                        }
+
+                        const isActive =
+                            categoryFilters.has(
+                                value
+                            );
+
+                        button.classList.toggle(
+                            "active",
+                            isActive
                         );
 
-                    const value =
-                        button.getAttribute(
-                            "data-filter-value"
+                        button.setAttribute(
+                            "aria-pressed",
+                            String(isActive)
                         );
 
-                    if (
-                        !category ||
-                        !value ||
-                        !selectedFilters[
-                            category
-                        ]
-                    ) {
-                        return;
+                        updateResults();
+
+                        /*
+                         * Un click su un filtro è
+                         * un'azione discreta:
+                         * viene salvato nella history.
+                         */
+                        updateUrl("push");
                     }
-
-                    const categoryFilters =
-                        selectedFilters[
-                            category
-                        ];
-
-                    if (
-                        categoryFilters.has(
-                            value
-                        )
-                    ) {
-                        categoryFilters.delete(
-                            value
-                        );
-                    } else {
-                        categoryFilters.add(
-                            value
-                        );
-                    }
-
-                    const isActive =
-                        categoryFilters.has(
-                            value
-                        );
-
-                    button.classList.toggle(
-                        "active",
-                        isActive
-                    );
-
-                    button.setAttribute(
-                        "aria-pressed",
-                        String(isActive)
-                    );
-
-                    updateResults();
-                }
-            );
-        });
+                );
+            }
+        );
 
 
         /* =================================================
            RESET
            ================================================= */
 
-        const resetControls = () => {
+        const resetControls = (
+            updateHistory = true
+        ) => {
             input.value = "";
 
             Object.values(
                 selectedFilters
             ).forEach(
-                (values) =>
-                    values.clear()
+                (values) => {
+                    values.clear();
+                }
             );
 
             filterButtons.forEach(
@@ -978,6 +1197,10 @@ const filterGroups = [
             );
 
             updateResults();
+
+            if (updateHistory) {
+                updateUrl("push");
+            }
         };
 
         resetButtons.forEach(
@@ -995,8 +1218,53 @@ const filterGroups = [
 
 
         /* =================================================
+           BROWSER HISTORY
+           ================================================= */
+
+        window.addEventListener(
+            "popstate",
+            () => {
+                restoreStateFromUrl();
+
+                /*
+                 * Chiude eventuali pannelli aperti,
+                 * senza modificare i filtri.
+                 */
+                categoryButtons.forEach(
+                    (button) => {
+                        button.setAttribute(
+                            "aria-expanded",
+                            "false"
+                        );
+
+                        button.classList.remove(
+                            "open"
+                        );
+                    }
+                );
+
+                categoryPanels.forEach(
+                    (panel) => {
+                        if (
+                            panel instanceof
+                            HTMLElement
+                        ) {
+                            panel.hidden =
+                                true;
+                        }
+                    }
+                );
+
+                updateResults();
+            }
+        );
+
+
+        /* =================================================
            INITIAL STATE
            ================================================= */
+
+        restoreStateFromUrl();
 
         updateResults();
     });
