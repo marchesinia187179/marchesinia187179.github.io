@@ -13,6 +13,13 @@ const { post } = Astro.props;
     class="card"
     data-filter-group="blog"
     data-tags={post.data.tags.join("|")}
+    data-search={[
+        post.data.title,
+        post.data.description,
+        ...post.data.tags
+    ]
+        .join(" ")
+        .toLocaleLowerCase("it")}
 >
     <h2>
         <a href={`/blog/${post.id}`}>

@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import ProjectCard from "../../components/ProjectCard.astro";
 import FilterBar from "../../components/FilterBar.astro";
+import ContentSearch from "../../components/ContentSearch.astro";
 import { getCollection } from "astro:content";
 
 const projects = await getCollection(
@@ -40,18 +41,37 @@ const tags = [
         </p>
     </header>
 
-    <FilterBar
-        tags={tags}
-        target="projects"
-    />
+    {
+        projects.length > 0 ? (
+            <>
+                <ContentSearch
+                    target="projects"
+                    placeholder="Cerca nei progetti..."
+                />
 
-    <section class="projects">
-        {
-            projects.map((project) => (
-                <ProjectCard project={project} />
-            ))
-        }
-    </section>
+                <FilterBar
+                    tags={tags}
+                    target="projects"
+                />
+
+                <section class="projects">
+                    {
+                        projects.map((project) => (
+                            <ProjectCard project={project} />
+                        ))
+                    }
+                </section>
+            </>
+        ) : (
+            <div class="empty-state">
+                <h2>Nessun progetto pubblicato</h2>
+
+                <p>
+                    I progetti saranno pubblicati prossimamente.
+                </p>
+            </div>
+        )
+    }
 </Layout>
 
 <style>

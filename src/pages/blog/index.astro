@@ -2,6 +2,7 @@
 import Layout from "../../layouts/Layout.astro";
 import ArticleCard from "../../components/ArticleCard.astro";
 import FilterBar from "../../components/FilterBar.astro";
+import ContentSearch from "../../components/ContentSearch.astro";
 import { getCollection } from "astro:content";
 
 const posts = await getCollection(
@@ -35,20 +36,27 @@ const tags = [
         Articoli, appunti e approfondimenti.
     </p>
 
-    <FilterBar
-        tags={tags}
-        target="blog"
-    />
-
     {
         posts.length > 0 ? (
-            <section class="posts">
-                {
-                    posts.map((post) => (
-                        <ArticleCard post={post} />
-                    ))
-                }
-            </section>
+            <>
+                <ContentSearch
+                    target="blog"
+                    placeholder="Cerca negli articoli..."
+                />
+
+                <FilterBar
+                    tags={tags}
+                    target="blog"
+                />
+
+                <section class="posts">
+                    {
+                        posts.map((post) => (
+                            <ArticleCard post={post} />
+                        ))
+                    }
+                </section>
+            </>
         ) : (
             <div class="empty-state">
                 <h2>Nessun articolo pubblicato</h2>

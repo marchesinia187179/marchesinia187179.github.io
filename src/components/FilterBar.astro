@@ -63,7 +63,7 @@ const {
 
         gap: 0.5rem;
 
-        margin-top: 0;
+        margin-top: 1rem;
     }
 
     .filter {
@@ -158,9 +158,23 @@ const {
                         selectedTag === "all" ||
                         itemTags.includes(selectedTag);
 
-                    item.hidden = !shouldShow;
+                    item.dataset.matchesFilter =
+                        String(shouldShow);
+
+                    updateVisibility(item);
                 });
             });
         });
     });
+
+    function updateVisibility(item: HTMLElement) {
+        const matchesSearch =
+            item.dataset.matchesSearch !== "false";
+
+        const matchesFilter =
+            item.dataset.matchesFilter !== "false";
+
+        item.hidden =
+            !(matchesSearch && matchesFilter);
+    }
 </script>

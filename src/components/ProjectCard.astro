@@ -13,6 +13,13 @@ const { project } = Astro.props;
     class="card"
     data-filter-group="projects"
     data-tags={project.data.tags.join("|")}
+    data-search={[
+        project.data.title,
+        project.data.description,
+        ...project.data.tags
+    ]
+        .join(" ")
+        .toLocaleLowerCase("it")}
 >
     {
         project.data.image && (
