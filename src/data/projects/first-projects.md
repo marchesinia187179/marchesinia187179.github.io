@@ -5,6 +5,8 @@ date: 2026-09-25
 tags:
   - Python
   - Machine Learning
+image: "/images/projects/first-projects.jpg"
+imageAlt: "Anteprima del primo progetto"
 github: "https://github.com/marchesinia187179"
 draft: false
 ---

@@ -36,6 +36,7 @@ const { Content } = await render(project);
 <Layout
     title={`${project.data.title} | Alessandro Marchesini`}
     description={project.data.description}
+    image={project.data.image ?? "/favicon.svg"}
 >
     <article>
         <header>
@@ -65,6 +66,16 @@ const { Content } = await render(project);
                 )
             }
         </header>
+
+        {
+            project.data.image && (
+                <img
+                    class="project-cover"
+                    src={project.data.image}
+                    alt={project.data.imageAlt ?? ""}
+                />
+            )
+        }
 
         <hr />
 
@@ -118,5 +129,17 @@ const { Content } = await render(project);
         margin: 2rem 0;
         border: none;
         border-top: 1px solid #ddd;
+    }
+
+    .project-cover {
+        width: 100%;
+
+        margin: 2rem 0;
+
+        aspect-ratio: 16 / 9;
+        object-fit: cover;
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
     }
 </style>
