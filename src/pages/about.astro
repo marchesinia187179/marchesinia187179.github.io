@@ -1,147 +1,526 @@
 ---
 import Layout from "../layouts/Layout.astro";
+
+const profileImage = "/images/about/alessandro-marchesini.jpeg";
+
+const linkedinUrl = "https://www.linkedin.com/in/alessandro-marchesini-9a109b138/";
+
+const email = "alessandromarchesini04@gmail.com";
 ---
 
 <Layout
-    title="Chi sono | Alessandro Marchesini"
-    description="Profilo, percorso e interessi di Alessandro Marchesini nell'ambito dell'ingegneria informatica, della cybersecurity, del machine learning e dei sistemi."
+    title="About | Alessandro Marchesini"
+    description="About Alessandro Marchesini, Computer Engineering student interested in cybersecurity, machine learning, computer systems, embedded technologies and multidisciplinary engineering."
 >
     <!-- =====================================================
-         HEADER
+         HERO
          ===================================================== -->
 
-    <section class="about-header">
-        <p class="eyebrow">
-            Chi sono
-        </p>
+    <section class="hero">
+        <div class="hero-content">
+            <p class="eyebrow">
+                About me
+            </p>
 
-        <h1>
-            Alessandro Marchesini
-        </h1>
+            <h1>
+                Hi, I'm Alessandro.
+            </h1>
 
-        <p class="introduction">
-            Studente di Ingegneria Informatica interessato
-            alla progettazione e integrazione di sistemi,
-            con particolare attenzione alla cybersecurity,
-            al machine learning e alle tecnologie
-            software-hardware.
-        </p>
+            <p class="hero-introduction">
+                I'm a Computer Engineering student interested in understanding how different technologies can work together to build complete, intelligent and secure systems.
+            </p>
+
+            <p class="hero-secondary">
+                I like approaching engineering from the problem first, then exploring the hardware, software and computational tools needed to solve it.
+            </p>
+
+            <div class="hero-actions">
+                <a
+                    class="button primary"
+                    href="/projects"
+                >
+                    Explore my projects
+                </a>
+
+                {
+                    linkedinUrl !== "#" && (
+                        <a
+                            class="button secondary"
+                            href={linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            LinkedIn
+                        </a>
+                    )
+                }
+
+                <a
+                    class="button secondary"
+                    href="https://github.com/marchesinia187179"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                >
+                    GitHub
+                </a>
+            </div>
+        </div>
+
+        <div class="profile-image-wrapper">
+            <img
+                class="profile-image"
+                src={profileImage}
+                alt="Alessandro Marchesini"
+            />
+        </div>
     </section>
 
 
     <!-- =====================================================
-         PROFILO
+         ABOUT ME
          ===================================================== -->
 
     <section class="about-section">
-        <div class="section-heading">
+        <div class="section-header">
             <p class="section-label">
-                Profilo
+                About me
             </p>
 
             <h2>
-                Un approccio multidisciplinare
+                Curious about the whole system
             </h2>
         </div>
 
-        <div class="text-content">
+        <div class="prose">
             <p>
-                Il mio interesse è rivolto alla progettazione
-                di sistemi informatici che richiedono
-                l'integrazione di tecnologie e competenze
-                differenti.
+                My interest in technology started long before university. As a child, I was fascinated by space and wanted to become an astronaut. Over time, that curiosity evolved into an interest in understanding the technologies behind complex systems.
             </p>
 
             <p>
-                Cybersecurity, machine learning, sistemi
-                embedded ed elaborazione efficiente
-                rappresentano per me parti complementari
-                dello stesso processo progettuale, da
-                combinare in funzione del problema da
-                affrontare.
+                What attracts me to computer engineering is its breadth. I am interested in computing as a whole rather than seeing software, hardware, networks, security and artificial intelligence as completely separate fields.
             </p>
 
             <p>
-                Utilizzo questo portfolio per raccogliere
-                progetti, approfondimenti ed esperienze
-                sviluppati durante il mio percorso
-                accademico e personale.
+                My goal is to develop enough knowledge across different areas to understand how they interact and use that knowledge to connect technologies when solving engineering problems.
+            </p>
+
+            <p>
+                Rather than starting from a technology and looking for somewhere to apply it, I prefer to start from a problem, understand its requirements and constraints, and then determine which technologies are the most appropriate.
             </p>
         </div>
     </section>
 
 
     <!-- =====================================================
-         AREE DI INTERESSE
+         JOURNEY
          ===================================================== -->
 
     <section class="about-section">
-        <div class="section-heading">
+        <div class="section-header">
             <p class="section-label">
-                Interessi
+                Education
             </p>
 
             <h2>
-                Aree principali
+                My journey
+            </h2>
+        </div>
+
+        <div class="timeline">
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <span></span>
+                </div>
+
+                <div class="timeline-content">
+                    <p class="timeline-period">
+                        2023 — 2026
+                    </p>
+
+                    <h3>
+                        BSc in Computer Engineering
+                    </h3>
+
+                    <p class="timeline-location">
+                        University of Modena and Reggio Emilia
+                        · Modena, Italy
+                    </p>
+
+                    <p>
+                        During my bachelor's degree, I developed a particular interest in operating systems, computer architecture, automatic control, artificial intelligence and computer networks.
+                    </p>
+
+                    <div class="timeline-highlight">
+                        <p class="highlight-label">
+                            Bachelor's thesis
+                        </p>
+
+                        <p>
+                            My thesis gave me the opportunity to connect several of these interests through a project involving machine learning, cybersecurity, network intrusion detection and satellite networks.
+                        </p>
+
+                        <a href="/projects/earth-trained-satellite-nids">
+                            View the project →
+                        </a>
+                    </div>
+                </div>
+            </article>
+
+            <article class="timeline-item">
+                <div class="timeline-marker">
+                    <span></span>
+                </div>
+
+                <div class="timeline-content">
+                    <p class="timeline-period">
+                        2026 — Present
+                    </p>
+
+                    <h3>
+                        MSc in Computer Engineering
+                    </h3>
+
+                    <p class="timeline-location">
+                        University of Bologna
+                        · Bologna, Italy
+                    </p>
+
+                    <p>
+                        I chose a Computer Systems Engineering oriented programme because of the flexibility it offers in shaping my studies and the opportunity to build a stronger foundation in computer and electronic systems.
+                    </p>
+
+                    <p>
+                        My current goal is to deepen my understanding of both embedded and general-purpose systems while studying how cybersecurity and machine learning can be integrated into them.
+                    </p>
+                </div>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- =====================================================
+         ENGINEERING APPROACH
+         ===================================================== -->
+
+    <section class="about-section">
+        <div class="section-header">
+            <p class="section-label">
+                Engineering approach
+            </p>
+
+            <h2>
+                Problem first, technology second
+            </h2>
+        </div>
+
+        <div class="prose">
+            <p>
+                I believe technology should be selected according to the problem being solved, rather than making the problem fit a predefined technology.
+            </p>
+
+            <p>
+                Understanding what happens below an abstraction is also important to me. Libraries and frameworks can provide a significant advantage, but understanding the principles and systems they are built upon makes it possible to use them more effectively and make better engineering decisions.
+            </p>
+        </div>
+
+        <div class="engineering-flow">
+            <div class="flow-step">
+                <span class="flow-number">01</span>
+
+                <div>
+                    <h3>
+                        Understand the problem
+                    </h3>
+
+                    <p>
+                        Identify the objective and understand what the system actually needs to do.
+                    </p>
+                </div>
+            </div>
+
+            <span
+                class="flow-arrow"
+                aria-hidden="true"
+            >
+                ↓
+            </span>
+
+            <div class="flow-step">
+                <span class="flow-number">02</span>
+
+                <div>
+                    <h3>
+                        Identify constraints
+                    </h3>
+
+                    <p>
+                        Consider performance, resources, energy, security and the environment in which the system will operate.
+                    </p>
+                </div>
+            </div>
+
+            <span
+                class="flow-arrow"
+                aria-hidden="true"
+            >
+                ↓
+            </span>
+
+            <div class="flow-step">
+                <span class="flow-number">03</span>
+
+                <div>
+                    <h3>
+                        Select the technologies
+                    </h3>
+
+                    <p>
+                        Choose the hardware, software and computational tools that best fit those requirements.
+                    </p>
+                </div>
+            </div>
+
+            <span
+                class="flow-arrow"
+                aria-hidden="true"
+            >
+                ↓
+            </span>
+
+            <div class="flow-step">
+                <span class="flow-number">04</span>
+
+                <div>
+                    <h3>
+                        Integrate the system
+                    </h3>
+
+                    <p>
+                        Connect the different components into a coherent architecture rather than treating them as isolated pieces.
+                    </p>
+                </div>
+            </div>
+
+            <span
+                class="flow-arrow"
+                aria-hidden="true"
+            >
+                ↓
+            </span>
+
+            <div class="flow-step">
+                <span class="flow-number">05</span>
+
+                <div>
+                    <h3>
+                        Build and validate
+                    </h3>
+
+                    <p>
+                        Turn the architecture into something concrete, test it and improve it until the system behaves as intended.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =====================================================
+         INTERESTS
+         ===================================================== -->
+
+    <section class="about-section">
+        <div class="section-header">
+            <p class="section-label">
+                What I'm exploring
+            </p>
+
+            <h2>
+                Areas of interest
             </h2>
         </div>
 
         <div class="areas">
+            <article>
+                <span class="area-index">
+                    01
+                </span>
+
+                <h3>
+                    Cybersecurity
+                </h3>
+
+                <p>
+                    Understanding how attacks work and how systems can be designed to detect, resist and mitigate them.
+                </p>
+            </article>
+
+            <article>
+                <span class="area-index">
+                    02
+                </span>
+
+                <h3>
+                    Machine Learning
+                </h3>
+
+                <p>
+                    Exploring machine learning as a component for building devices and systems capable of making intelligent decisions.
+                </p>
+            </article>
+
+            <article>
+                <span class="area-index">
+                    03
+                </span>
+
+                <h3>
+                    Computer Systems
+                </h3>
+
+                <p>
+                    Understanding how computing systems operate beneath higher-level abstractions and how their different components interact.
+                </p>
+            </article>
+
+            <article>
+                <span class="area-index">
+                    04
+                </span>
+
+                <h3>
+                    Embedded & Heterogeneous Computing
+                </h3>
+
+                <p>
+                    Combining different hardware and software components to create systems tailored to the problem being solved.
+                </p>
+            </article>
+
+            <article>
+                <span class="area-index">
+                    05
+                </span>
+
+                <h3>
+                    Efficient Computing
+                </h3>
+
+                <p>
+                    Exploring how computational capabilities can be brought to smaller and lower-power devices while preserving the performance required by the application.
+                </p>
+            </article>
+        </div>
+    </section>
+
+
+    <!-- =====================================================
+         DEVICE TO SYSTEM
+         ===================================================== -->
+
+    <section class="about-section">
+        <div class="system-section">
+            <div class="section-header">
+                <p class="section-label">
+                    Building systems
+                </p>
+
+                <h2>
+                    From a single device to an
+                    end-to-end system
+                </h2>
+            </div>
+
+            <div class="system-grid">
+                <div class="prose">
+                    <p>
+                        I am particularly interested in projects that can begin with a concrete device and eventually become part of a larger end-to-end system.
+                    </p>
+
+                    <p>
+                        I enjoy the complete development process, from the initial idea and architecture to implementation, testing and the final prototype.
+                    </p>
+
+                    <p>
+                        The most satisfying part is seeing something actually work and knowing that I contributed directly to building it.
+                    </p>
+                </div>
+
+                <div class="system-card">
+                    <p class="system-card-label">
+                        My perspective
+                    </p>
+
+                    <p>
+                        I do not necessarily want to design every individual component from scratch.
+                    </p>
+
+                    <p>
+                        I want to understand how those components work well enough to combine them effectively into systems that are <strong>efficient</strong>, <strong>secure</strong> and <strong>intelligent</strong>.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <!-- =====================================================
+         FIELDS
+         ===================================================== -->
+
+    <section class="about-section">
+        <div class="section-header">
+            <p class="section-label">
+                Beyond technologies
+            </p>
+
+            <h2>
+                Fields I want to explore
+            </h2>
+
+            <p class="section-description">
+                I am interested in applying engineering across different domains rather than limiting myself to a single industry.
+            </p>
+        </div>
+
+        <div class="fields">
+            <article>
+                <h3>
+                    Space
+                </h3>
+
+                <p>
+                    A field connected to the curiosity that originally brought me closer to technology, and one where complex systems require many engineering disciplines to work together.
+                </p>
+            </article>
+
+            <article>
+                <h3>
+                    Healthcare
+                </h3>
+
+                <p>
+                    Intelligent devices and computational systems that can contribute to monitoring, analysis and technologies supporting human health.
+                </p>
+            </article>
+
             <article>
                 <h3>
                     Cybersecurity
                 </h3>
 
                 <p>
-                    Sicurezza dei sistemi, delle reti
-                    e delle infrastrutture informatiche.
+                    Systems and infrastructures whose reliability also depends on their ability to operate securely in the presence of threats.
                 </p>
             </article>
 
             <article>
                 <h3>
-                    Machine Learning
+                    Sustainability
                 </h3>
 
                 <p>
-                    Applicazione di tecniche di apprendimento
-                    automatico a problemi ingegneristici
-                    e sistemi reali.
-                </p>
-            </article>
-
-            <article>
-                <h3>
-                    Systems
-                </h3>
-
-                <p>
-                    Architetture, sistemi concorrenti,
-                    elaborazione accelerata e sistemi
-                    real-time.
-                </p>
-            </article>
-
-            <article>
-                <h3>
-                    Embedded
-                </h3>
-
-                <p>
-                    Progettazione di sistemi intelligenti
-                    attraverso l'integrazione tra hardware
-                    e software.
-                </p>
-            </article>
-
-            <article>
-                <h3>
-                    Cloud & Infrastructure
-                </h3>
-
-                <p>
-                    Architetture, servizi e infrastrutture
-                    per sistemi distribuiti e applicazioni.
+                    Efficient technologies and engineering projects that can make a concrete, positive contribution to environmental challenges.
                 </p>
             </article>
         </div>
@@ -149,107 +528,96 @@ import Layout from "../layouts/Layout.astro";
 
 
     <!-- =====================================================
-         APPROCCIO
+         FUTURE
          ===================================================== -->
 
     <section class="about-section">
-        <div class="section-heading">
+        <div class="section-header">
             <p class="section-label">
-                Approccio
+                Looking forward
             </p>
 
             <h2>
-                Dall'idea al sistema
+                Building things together
             </h2>
         </div>
 
-        <div class="approach">
-            <div class="approach-step">
-                <span class="step-number">
-                    01
-                </span>
+        <div class="future-grid">
+            <div class="prose">
+                <p>
+                    Looking ahead, I see myself working in multidisciplinary teams where hardware and software come together to create complete devices and systems.
+                </p>
 
-                <div>
-                    <h3>
-                        Comprendere il problema
-                    </h3>
+                <p>
+                    I would like my work to combine hands-on experimentation with software development: designing, implementing, testing and improving real systems rather than being confined to only one layer of the technology stack.
+                </p>
 
-                    <p>
-                        Analizzare requisiti, vincoli
-                        e caratteristiche del sistema
-                        da progettare.
-                    </p>
-                </div>
+                <p>
+                    The specific size or type of company is less important to me than working in an environment where there is always something new to build, something new to learn and where commitment and contribution are valued.
+                </p>
             </div>
 
-            <div class="approach-step">
-                <span class="step-number">
-                    02
-                </span>
+            <div class="future-highlight">
+                <h3>
+                    Technical leadership
+                </h3>
 
-                <div>
-                    <h3>
-                        Integrare le tecnologie
-                    </h3>
+                <p>
+                    Over time, I would like to take on greater technical responsibility and help coordinate teams of specialists.
+                </p>
 
-                    <p>
-                        Selezionare e combinare gli strumenti
-                        più adatti tra software, hardware,
-                        sicurezza e machine learning.
-                    </p>
-                </div>
-            </div>
-
-            <div class="approach-step">
-                <span class="step-number">
-                    03
-                </span>
-
-                <div>
-                    <h3>
-                        Progettare il sistema
-                    </h3>
-
-                    <p>
-                        Considerare le singole componenti
-                        come parti di un'architettura
-                        complessiva e coerente.
-                    </p>
-                </div>
+                <p>
+                    To me, technical leadership does not mean working above a team, but working with it: contributing to engineering decisions, supporting specialists and remaining connected to the actual development process.
+                </p>
             </div>
         </div>
     </section>
 
 
     <!-- =====================================================
-         ESPLORA
+         CONTACT
          ===================================================== -->
 
-    <section class="about-section">
-        <div class="explore">
+    <section class="about-section contact-section">
+        <div class="contact-card">
             <div>
                 <p class="section-label">
-                    Portfolio
+                    Get in touch
                 </p>
 
                 <h2>
-                    Esplora il mio lavoro
+                    Let's connect
                 </h2>
 
                 <p>
-                    Nei progetti raccolgo applicazioni
-                    concrete delle tecnologie e degli
-                    ambiti che sto approfondendo.
+                    I'm always interested in exchanging ideas about computer engineering, technology and new projects.
                 </p>
             </div>
 
-            <div class="explore-actions">
-                <a
-                    class="button primary"
-                    href="/projects"
-                >
-                    Esplora i progetti
-                </a>
+            <div class="contact-actions">
+                {
+                    email !== "YOUR_EMAIL" && (
+                        <a
+                            class="button primary"
+                            href={`mailto:${email}`}
+                        >
+                            Email me
+                        </a>
+                    )
+                }
+
+                {
+                    linkedinUrl !== "#" && (
+                        <a
+                            class="button secondary"
+                            href={linkedinUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                        >
+                            LinkedIn
+                        </a>
+                    )
+                }
 
                 <a
                     class="button secondary"
@@ -266,218 +634,144 @@ import Layout from "../layouts/Layout.astro";
 
 <style>
     /* =====================================================
-       HEADER
+       SHARED
        ===================================================== */
 
-    .about-header {
-        max-width: 850px;
-
-        padding:
-            clamp(2rem, 6vw, 5rem)
-            0
-            4rem;
-    }
-
     .eyebrow,
-    .section-label {
-        margin-bottom: 0.75rem;
-
+    .section-label,
+    .timeline-period,
+    .highlight-label,
+    .system-card-label {
         color: var(--color-primary);
 
-        font-size: 0.85rem;
+        font-size: 0.82rem;
         font-weight: 700;
 
         letter-spacing: 0.08em;
         text-transform: uppercase;
     }
 
-    .about-header h1 {
-        margin-bottom: 1.5rem;
+    .section-label,
+    .eyebrow {
+        margin-bottom: 0.75rem;
     }
-
-    .introduction {
-        max-width: 750px;
-
-        margin-bottom: 0;
-
-        color: var(--color-text-secondary);
-
-        font-size: clamp(
-            1.1rem,
-            2vw,
-            1.3rem
-        );
-    }
-
-
-    /* =====================================================
-       SECTIONS
-       ===================================================== */
 
     .about-section {
-        max-width: 950px;
-
-        padding: 4rem 0;
+        padding: 5rem 0;
 
         border-top: 1px solid var(--color-border);
     }
 
-    .section-heading {
-        margin-bottom: 2rem;
-    }
-
-    .section-heading h2 {
-        margin-bottom: 0;
-    }
-
-
-    /* =====================================================
-       PROFILE
-       ===================================================== */
-
-    .text-content {
+    .section-header {
         max-width: 750px;
+
+        margin-bottom: 2.5rem;
     }
 
-    .text-content p {
+    .section-header h2 {
+        margin-bottom: 0;
+    }
+
+    .section-description {
+        max-width: 650px;
+
+        margin-top: 1rem;
+        margin-bottom: 0;
+
         color: var(--color-text-secondary);
     }
 
-    .text-content p:last-child {
+    .prose {
+        max-width: 760px;
+    }
+
+    .prose p {
+        color: var(--color-text-secondary);
+    }
+
+    .prose p:last-child {
         margin-bottom: 0;
     }
 
 
     /* =====================================================
-       AREAS
+       HERO
        ===================================================== */
 
-    .areas {
+    .hero {
         display: grid;
-
         grid-template-columns:
-            repeat(
-                auto-fit,
-                minmax(240px, 1fr)
-            );
+            minmax(0, 1.5fr)
+            minmax(220px, 0.65fr);
 
-        gap: 1rem;
-    }
-
-    .areas article {
-        padding: 1.5rem;
-
-        background: var(--color-surface);
-
-        border: 1px solid var(--color-border);
-        border-radius: var(--border-radius);
-
-        transition:
-            transform var(--transition),
-            border-color var(--transition);
-    }
-
-    .areas article:hover {
-        transform: translateY(-3px);
-
-        border-color: var(--color-primary);
-    }
-
-    .areas h3 {
-        margin-bottom: 0.75rem;
-    }
-
-    .areas p {
-        margin-bottom: 0;
-
-        color: var(--color-text-secondary);
-    }
-
-
-    /* =====================================================
-       APPROACH
-       ===================================================== */
-
-    .approach {
-        display: grid;
-
-        gap: 1rem;
-    }
-
-    .approach-step {
-        display: grid;
-
-        grid-template-columns:
-            auto 1fr;
-
-        gap: 1.25rem;
-
-        padding: 1.5rem;
-
-        background: var(--color-surface);
-
-        border: 1px solid var(--color-border);
-        border-radius: var(--border-radius);
-    }
-
-    .step-number {
-        color: var(--color-primary);
-
-        font-size: 0.85rem;
-        font-weight: 700;
-
-        letter-spacing: 0.05em;
-    }
-
-    .approach-step h3 {
-        margin-bottom: 0.5rem;
-    }
-
-    .approach-step p {
-        margin-bottom: 0;
-
-        color: var(--color-text-secondary);
-    }
-
-
-    /* =====================================================
-       EXPLORE
-       ===================================================== */
-
-    .explore {
-        display: flex;
         align-items: center;
-        justify-content: space-between;
 
-        gap: 2rem;
+        gap: clamp(2.5rem, 7vw, 6rem);
 
-        padding: 2rem;
-
-        background: var(--color-surface);
-
-        border: 1px solid var(--color-border);
-        border-radius: var(--border-radius);
+        padding:
+            clamp(3rem, 8vw, 7rem)
+            0;
     }
 
-    .explore h2 {
-        margin-bottom: 0.75rem;
+    .hero-content {
+        max-width: 780px;
     }
 
-    .explore p:not(.section-label) {
-        max-width: 600px;
+    .hero h1 {
+        margin-bottom: 1.5rem;
+    }
 
-        margin-bottom: 0;
+    .hero-introduction {
+        max-width: 720px;
+
+        margin-bottom: 1rem;
+
+        color: var(--color-text-secondary);
+
+        font-size: clamp(
+            1.15rem,
+            2vw,
+            1.35rem
+        );
+    }
+
+    .hero-secondary {
+        max-width: 680px;
+
+        margin-bottom: 2rem;
 
         color: var(--color-text-secondary);
     }
 
-    .explore-actions {
+    .hero-actions {
         display: flex;
         flex-wrap: wrap;
 
-        flex-shrink: 0;
-
         gap: 0.75rem;
+    }
+
+    .profile-image-wrapper {
+        width: min(100%, 300px);
+
+        justify-self: end;
+
+        aspect-ratio: 1 / 1;
+
+        overflow: hidden;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: 50%;
+    }
+
+    .profile-image {
+        width: 100%;
+        height: 100%;
+
+        display: block;
+
+        object-fit: cover;
     }
 
 
@@ -526,9 +820,422 @@ import Layout from "../layouts/Layout.astro";
 
     .button.secondary:hover {
         color: var(--color-text);
-        background: var(--color-background);
+        background: var(--color-surface);
 
         border-color: var(--color-primary);
+    }
+
+
+    /* =====================================================
+       TIMELINE
+       ===================================================== */
+
+    .timeline {
+        max-width: 850px;
+    }
+
+    .timeline-item {
+        display: grid;
+
+        grid-template-columns:
+            28px
+            minmax(0, 1fr);
+
+        gap: 1.25rem;
+
+        position: relative;
+    }
+
+    .timeline-item:not(:last-child) {
+        padding-bottom: 3rem;
+    }
+
+    .timeline-marker {
+        display: flex;
+        justify-content: center;
+
+        position: relative;
+    }
+
+    .timeline-marker::after {
+        content: "";
+
+        position: absolute;
+
+        top: 18px;
+        bottom: -3rem;
+
+        width: 1px;
+
+        background: var(--color-border);
+    }
+
+    .timeline-item:last-child
+        .timeline-marker::after {
+        display: none;
+    }
+
+    .timeline-marker span {
+        position: relative;
+        z-index: 1;
+
+        width: 13px;
+        height: 13px;
+
+        margin-top: 4px;
+
+        background: var(--color-primary);
+
+        border: 3px solid var(--color-background);
+        border-radius: 50%;
+
+        box-shadow:
+            0 0 0 1px var(--color-primary);
+    }
+
+    .timeline-period {
+        margin-bottom: 0.5rem;
+    }
+
+    .timeline-content h3 {
+        margin-bottom: 0.4rem;
+
+        font-size: 1.35rem;
+    }
+
+    .timeline-location {
+        margin-bottom: 1.25rem;
+
+        color: var(--color-text-secondary);
+
+        font-size: 0.95rem;
+    }
+
+    .timeline-content > p:not(
+        .timeline-period,
+        .timeline-location
+    ) {
+        max-width: 720px;
+
+        color: var(--color-text-secondary);
+    }
+
+    .timeline-highlight {
+        max-width: 720px;
+
+        margin-top: 1.5rem;
+
+        padding: 1.25rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .timeline-highlight p {
+        color: var(--color-text-secondary);
+    }
+
+    .timeline-highlight
+        .highlight-label {
+        margin-bottom: 0.5rem;
+
+        color: var(--color-primary);
+    }
+
+    .timeline-highlight a {
+        font-weight: 600;
+    }
+
+
+    /* =====================================================
+       ENGINEERING FLOW
+       ===================================================== */
+
+    .engineering-flow {
+        max-width: 800px;
+
+        margin-top: 3rem;
+    }
+
+    .flow-step {
+        display: grid;
+
+        grid-template-columns:
+            48px
+            minmax(0, 1fr);
+
+        gap: 1.25rem;
+
+        padding: 1.4rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .flow-number {
+        color: var(--color-primary);
+
+        font-size: 0.85rem;
+        font-weight: 700;
+
+        letter-spacing: 0.05em;
+    }
+
+    .flow-step h3 {
+        margin-bottom: 0.4rem;
+    }
+
+    .flow-step p {
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+    }
+
+    .flow-arrow {
+        display: block;
+
+        padding: 0.4rem 0;
+
+        color: var(--color-text-secondary);
+
+        text-align: center;
+
+        font-size: 1.25rem;
+    }
+
+
+    /* =====================================================
+       AREAS
+       ===================================================== */
+
+    .areas {
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                auto-fit,
+                minmax(250px, 1fr)
+            );
+
+        gap: 1rem;
+    }
+
+    .areas article {
+        padding: 1.5rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+
+        transition:
+            transform var(--transition),
+            border-color var(--transition);
+    }
+
+    .areas article:hover {
+        transform: translateY(-3px);
+
+        border-color: var(--color-primary);
+    }
+
+    .area-index {
+        display: block;
+
+        margin-bottom: 1rem;
+
+        color: var(--color-primary);
+
+        font-size: 0.8rem;
+        font-weight: 700;
+    }
+
+    .areas h3 {
+        margin-bottom: 0.75rem;
+    }
+
+    .areas p {
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+    }
+
+
+    /* =====================================================
+       DEVICE TO SYSTEM
+       ===================================================== */
+
+    .system-grid {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1.2fr)
+            minmax(280px, 0.8fr);
+
+        align-items: start;
+
+        gap: 2rem;
+    }
+
+    .system-card {
+        padding: 1.75rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .system-card-label {
+        margin-bottom: 1rem;
+    }
+
+    .system-card p:not(
+        .system-card-label
+    ) {
+        color: var(--color-text-secondary);
+    }
+
+    .system-card p:last-child {
+        margin-bottom: 0;
+    }
+
+    .system-card strong {
+        color: var(--color-text);
+    }
+
+
+    /* =====================================================
+       FIELDS
+       ===================================================== */
+
+    .fields {
+        display: grid;
+
+        grid-template-columns:
+            repeat(
+                2,
+                minmax(0, 1fr)
+            );
+
+        gap: 1rem;
+    }
+
+    .fields article {
+        padding: 1.5rem;
+
+        border-left: 3px solid
+            var(--color-primary);
+
+        background: var(--color-surface);
+
+        border-top: 1px solid
+            var(--color-border);
+
+        border-right: 1px solid
+            var(--color-border);
+
+        border-bottom: 1px solid
+            var(--color-border);
+
+        border-radius: var(--border-radius);
+    }
+
+    .fields h3 {
+        margin-bottom: 0.75rem;
+    }
+
+    .fields p {
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+    }
+
+
+    /* =====================================================
+       FUTURE
+       ===================================================== */
+
+    .future-grid {
+        display: grid;
+
+        grid-template-columns:
+            minmax(0, 1.15fr)
+            minmax(280px, 0.85fr);
+
+        align-items: start;
+
+        gap: 2rem;
+    }
+
+    .future-highlight {
+        padding: 1.75rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .future-highlight h3 {
+        margin-bottom: 1rem;
+    }
+
+    .future-highlight p {
+        color: var(--color-text-secondary);
+    }
+
+    .future-highlight p:last-child {
+        margin-bottom: 0;
+    }
+
+
+    /* =====================================================
+       CONTACT
+       ===================================================== */
+
+    .contact-section {
+        padding-bottom: 3rem;
+    }
+
+    .contact-card {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+
+        gap: 3rem;
+
+        padding: 2rem;
+
+        background: var(--color-surface);
+
+        border: 1px solid var(--color-border);
+        border-radius: var(--border-radius);
+    }
+
+    .contact-card h2 {
+        margin-bottom: 0.75rem;
+    }
+
+    .contact-card p:not(.section-label) {
+        max-width: 570px;
+
+        margin-bottom: 0;
+
+        color: var(--color-text-secondary);
+    }
+
+    .contact-actions {
+        display: flex;
+        flex-wrap: wrap;
+
+        flex-shrink: 0;
+
+        gap: 0.75rem;
     }
 
 
@@ -536,22 +1243,64 @@ import Layout from "../layouts/Layout.astro";
        RESPONSIVE
        ===================================================== */
 
-    @media (max-width: 700px) {
-        .about-section {
-            padding: 3rem 0;
+    @media (max-width: 800px) {
+        .hero {
+            grid-template-columns: 1fr;
         }
 
-        .explore {
+        .profile-image-wrapper {
+            width: min(220px, 65vw);
+
+            grid-row: 1;
+
+            justify-self: start;
+        }
+
+        .system-grid,
+        .future-grid {
+            grid-template-columns: 1fr;
+        }
+
+        .contact-card {
             align-items: flex-start;
             flex-direction: column;
         }
     }
 
-    @media (max-width: 500px) {
-        .approach-step {
+    @media (max-width: 650px) {
+        .about-section {
+            padding: 3.5rem 0;
+        }
+
+        .fields {
+            grid-template-columns: 1fr;
+        }
+    }
+
+    @media (max-width: 450px) {
+        .flow-step {
             grid-template-columns: 1fr;
 
-            gap: 0.75rem;
+            gap: 0.6rem;
+        }
+
+        .timeline-item {
+            grid-template-columns:
+                20px
+                minmax(0, 1fr);
+
+            gap: 0.9rem;
+        }
+
+        .hero-actions,
+        .contact-actions {
+            align-items: stretch;
+            flex-direction: column;
+        }
+
+        .hero-actions .button,
+        .contact-actions .button {
+            width: 100%;
         }
     }
 </style>
